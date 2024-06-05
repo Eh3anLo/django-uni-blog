@@ -1,0 +1,20 @@
+{% extends '_base.html'%}
+
+{% block title %}
+home page
+{% endblock title %}
+
+{% block content %}
+<h1>Welcome to Uni Blog
+    <span class='success'>
+        {{ user.username }}
+    </span>
+</h1>
+<small>we are developing with this steps:</small>
+<ul>
+    <li>Create user and profile</li>
+    <li>Create Login and Logout sys + Sign up</li>
+    <li>Create Post and the pages for it</li>
+</ul>
+<small>some footer :) </small>
+{% endblock content %}

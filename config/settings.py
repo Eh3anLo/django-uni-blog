@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # installed package
-    'django-editorjs-fields',
+    'django_editorjs_fields',
     # local
     'accounts',
     'profiles',

@@ -37,10 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+    # installed package
+    'django-editorjs-fields',
     # local
     'accounts',
-    'profiles'
+    'profiles',
+    'articles',
 ]
 
 MIDDLEWARE = [

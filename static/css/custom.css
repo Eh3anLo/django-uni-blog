@@ -4,3 +4,13 @@
 .max-w-400 {
     max-width: 400px;
 }
+.hljs {
+    color: inherit !important;
+    background: none !important;
+}
+html {
+    font-size: medium;
+}
+li {
+    margin-bottom: 1rem;
+}

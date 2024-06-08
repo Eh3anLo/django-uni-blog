@@ -25,5 +25,5 @@ class Article(models.Model):
 
     def save(self, *args, **kwargs):
         # self.slug = slugify(self.title + '-' + str(self.id).split('-')[0] )
-        self.slug = slugify(self.title)
+        self.slug = slugify(self.title.lower())
         super(Article, self).save(*args, **kwargs)

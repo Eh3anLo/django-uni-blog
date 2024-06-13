@@ -4,14 +4,14 @@
 <style>
     .card {
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s;
+        transition: all 0.2s;
         border-radius: 8px;
         overflow: hidden;
-        border: 1px solid #eee;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--contrast);
+        background-color : var(--bg-muted)
     }
-    .card:hover {
-        transform: scale(1.05);
+    .card:hover{
+        background-color : var(--bg-default)
     }
     .card img {
         width: 100%;
@@ -23,6 +23,7 @@
     .card-title {
         font-size: 1.2em;
         margin: 0 0 10px 0;
+        text-decoration-color : var(--attention)
     }
     .card-text {
         margin: 0 0 15px 0;
@@ -31,8 +32,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 0.9em;
-        border-top: 1px solid #eee;
+        border-top: 1px solid var(--contrast);
         padding: 10px 15px;
         color : #999;
     }
@@ -53,7 +53,7 @@
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        margin : 0px 20px 0px 0px !important;
+        margin : 0px 10px 0px 0px !important;
     }
     .author-name {
         font-size: 0.9em;
@@ -73,22 +73,25 @@
         <!-- Add more articles here -->
          {% for article in articles %}
          <div class="card">
-                 <a href="{{ article.get_absolute_url }}">
-                </a>
-                 <img src={{ article.img.url }} alt="Article Image">
-                 <div class="card-content">
-                     <div class="card-title bold">{{ article.title }}</div>
-                     <div class="card-text normal">
-                         {{ article.description|truncatewords:10}}
-                     </div>
+             <img src={{ article.img.url }} alt="Article Image">
+             <div class="card-content">
+                     <a href="{{ article.get_absolute_url }}">
+                         <div class="card-title bold underline ">{{ article.title }}</div>
+                        <div class="card-text normal">
+                            {{ article.description|truncatewords:10}}
+                        </div>
+                    </a>
                      <div class="author">
                          <img src="media/uploads/images/2024/06/h4jlbdRpbcQ.jpg" alt="Author Image">
                          <div class="author-name">{{ article.author.username}}</div>
                      </div>
                  </div>
-                 <div class="card-footer">
-                     <span><i class="fa-regular fa-clock mr-.5"></i>{{ article.date_created.date}}</span>
-                     <span class="upvotes"><i class="fa-regular fa-thumbs-up"></i> {{ article.upvote}}</span>
+                 <div class="card-footer small">
+                     <span class=""><i class="fa-regular fa-clock mr-.5"></i>{{ article.date_created.date}}</span>
+                     <span>
+                         <span class="views mr-.5"><i class="fa-solid fa-eye"></i> {{ article.views}}</span>
+                         <span class="upvotes"><i class="fa-regular fa-thumbs-up"></i> {{ article.upvote}}</span>
+                    </span>
                  </div>
              </div>
          {% endfor %}

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django_editorjs_fields import EditorJsJSONField
 from django.utils.text import slugify
 import uuid
@@ -11,6 +12,8 @@ class Article(models.Model):
     }
     # id = models.UUIDField(default=uuid.uuid4, unique=True,primary_key=True, editable=False)
     title = models.CharField(max_length=100)
+    description = models.TextField(blank=True,null=True)
+    img = models.ImageField(upload_to='media', null=True , blank=True)
     author = models.ForeignKey('accounts.CustomUser' , on_delete=models.CASCADE)
     body = EditorJsJSONField()
     date_created = models.DateTimeField(auto_now_add=True)
@@ -27,3 +30,7 @@ class Article(models.Model):
         # self.slug = slugify(self.title + '-' + str(self.id).split('-')[0] )
         self.slug = slugify(self.title.lower())
         super(Article, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("article_detail", kwargs={"id": self.pk , "slug" : self.slug})
+    

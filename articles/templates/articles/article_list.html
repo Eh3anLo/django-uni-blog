@@ -1,0 +1,95 @@
+{% extends '_base.html' %}
+{% block title %} Articles {% endblock title %}
+{% block custom_style %} 
+<style>
+    .card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .card:hover {
+        transform: scale(1.05);
+    }
+    .card img {
+        width: 100%;
+        height: 212px;
+    }
+    .card-content {
+        padding: 15px;
+    }
+    .card-title {
+        font-size: 1.2em;
+        margin: 0 0 10px 0;
+    }
+    .card-text {
+        color: #555;
+        margin: 0 0 15px 0;
+    }
+    .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9em;
+        color: #888;
+        border-top: 1px solid #eee;
+        padding: 10px 15px;
+    }
+    .upvotes {
+        color: #ff4500;
+    }
+    .author {
+        display: flex;
+        align-items: center;
+        margin-top: 15px;
+    }
+    .author img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    .author-name {
+        font-size: 0.9em;
+        color: #333;
+    }
+    .article-list {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+    }
+</style>
+{% endblock custom_style %}
+{% block content %}
+<section>
+    <div class="article-list">
+        <!-- Repeat this block for each article -->
+        <!-- Add more articles here -->
+         {% for article in articles %}
+         <a href="{{ article.get_absolute_url }}">
+             <div class="card">
+                 <img src={{ article.img.url }} alt="Article Image">
+                 <div class="card-content">
+                     <div class="card-title">{{ article.title }}</div>
+                     <div class="card-text">
+                         {{ article.description|truncatewords:10}}
+                     </div>
+                     <div class="author">
+                         <img src="media/uploads/images/2024/06/h4jlbdRpbcQ.jpg" alt="Author Image">
+                         <div class="author-name">{{ article.author.username}}</div>
+                     </div>
+                 </div>
+                 <div class="card-footer">
+                     <span>Created: {{ article.date_created.date}}</span>
+                     <span class="upvotes">Upvotes: 456</span>
+                 </div>
+             </div>
+         </a>
+         {% endfor %}
+        <!-- Repeat for more articles -->
+    </div>
+</section>
+{% endblock content %}

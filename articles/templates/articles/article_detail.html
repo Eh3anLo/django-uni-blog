@@ -7,11 +7,12 @@
 <h1>
     {{ article.title }}
 </h1>
-<main>
+<section>
     {% load editorjs %}
     {{ article.body | editorjs }}
-</main>
+</section>
 <script>
+    // Add <pre> element as parent to  all <code> element with class 'code'
     document.addEventListener("DOMContentLoaded", function() {
         // Select all <code> elements with the class 'code'
         const codeElements = document.querySelectorAll('code.code');

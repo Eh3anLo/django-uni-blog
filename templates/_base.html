@@ -15,6 +15,7 @@
 
 <script>hljs.highlightAll();</script>
     <title>{% block title %}{% endblock title %}</title>
+    {% block custom_style %}{% endblock custom_style%}
 </head>
 <body>
     <nav>
@@ -22,8 +23,6 @@
           <li><a href="#" onclick="event.preventDefault();document.querySelector('html').dataset.colorScheme = (document.querySelector('html').dataset.colorScheme ?? (matchMedia('(prefers-color-scheme: dark)') ? 'dark' : 'light')) === 'light' ? 'dark' : 'light'" class="color-scheme">
             ☀️
           </a></li>
-    
-            
           {% if user.is_authenticated %}
           <li class='success'>
             👤  {{ user.username }}
@@ -36,6 +35,9 @@
               <a href="{% url 'login' %}" class='mt-.75 default ml-1'>login</a>
               <a href="{% url 'signup' %}" class='mt-.75 accent ml-1'>signup</a>
           {% endif %}
+          <li>
+            <a href="{% url 'articles_list'%}">Blog</a>
+          </li>
         </menu>
       </nav>
     {% block content %}{% endblock content%}

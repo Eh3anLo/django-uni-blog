@@ -7,7 +7,7 @@
         transition: transform 0.2s;
         border-radius: 8px;
         overflow: hidden;
-        border: 1px solid #ddd;
+        border: 1px solid #eee;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
     .card:hover {
@@ -25,7 +25,6 @@
         margin: 0 0 10px 0;
     }
     .card-text {
-        color: #555;
         margin: 0 0 15px 0;
     }
     .card-footer {
@@ -33,13 +32,18 @@
         justify-content: space-between;
         align-items: center;
         font-size: 0.9em;
-        color: #888;
         border-top: 1px solid #eee;
         padding: 10px 15px;
+        color : #999;
     }
     .upvotes {
-        color: #ff4500;
+        color: #999;
+        transition : all .1s ease;
     }
+    .card:hover .upvotes{
+        color: #44f08e;
+        text-shadow: 1px 2px 11px rgb(42 238 109 / 80%);
+    }   
     .author {
         display: flex;
         align-items: center;
@@ -49,11 +53,10 @@
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        margin-right: 10px;
+        margin : 0px 20px 0px 0px !important;
     }
     .author-name {
         font-size: 0.9em;
-        color: #333;
     }
     .article-list {
         width: 100%;
@@ -69,12 +72,13 @@
         <!-- Repeat this block for each article -->
         <!-- Add more articles here -->
          {% for article in articles %}
-         <a href="{{ article.get_absolute_url }}">
-             <div class="card">
+         <div class="card">
+                 <a href="{{ article.get_absolute_url }}">
+                </a>
                  <img src={{ article.img.url }} alt="Article Image">
                  <div class="card-content">
-                     <div class="card-title">{{ article.title }}</div>
-                     <div class="card-text">
+                     <div class="card-title bold">{{ article.title }}</div>
+                     <div class="card-text normal">
                          {{ article.description|truncatewords:10}}
                      </div>
                      <div class="author">
@@ -83,11 +87,10 @@
                      </div>
                  </div>
                  <div class="card-footer">
-                     <span>Created: {{ article.date_created.date}}</span>
-                     <span class="upvotes">Upvotes: 456</span>
+                     <span><i class="fa-regular fa-clock mr-.5"></i>{{ article.date_created.date}}</span>
+                     <span class="upvotes"><i class="fa-regular fa-thumbs-up"></i> {{ article.upvote}}</span>
                  </div>
              </div>
-         </a>
          {% endfor %}
         <!-- Repeat for more articles -->
     </div>

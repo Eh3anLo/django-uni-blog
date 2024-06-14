@@ -22,6 +22,15 @@ a:hover{
     text-decoration: none !important;
 }
 
-@media (prefers-color-scheme: dark) {
-   
+.custom-link::after {
+    content: attr(data-content);
+    display: none;
+    color: var(--default);
+    margin-left: .0;
+
+}
+.custom-link:hover::after{
+    display: inline;
+    margin-left: .5rem;
+
 }

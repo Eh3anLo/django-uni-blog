@@ -73,7 +73,7 @@
         <!-- Add more articles here -->
          {% for article in articles %}
          <div class="card">
-             <img src={{ article.img.url }} alt="Article Image">
+             <img src="{{ article.img.url }}" alt="Article Image">
              <div class="card-content">
                      <a href="{{ article.get_absolute_url }}">
                          <div class="card-title bold underline ">{{ article.title }}</div>

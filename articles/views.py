@@ -1,3 +1,4 @@
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView , CreateView
@@ -15,6 +16,9 @@ class ArticlesListView(ListView):
     model = Article
     context_object_name = 'articles'
     template_name = 'articles/article_list.html'
+
+    def get_queryset(self):
+        return Article.objects.filter(status = 'pub')
 
 class ArticleCreationView(LoginRequiredMixin , CreateView):
     model = Article

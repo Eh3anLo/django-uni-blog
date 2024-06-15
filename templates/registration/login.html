@@ -6,6 +6,10 @@ welcome but who are you?
 
 {% block content %}
 <section>
+{% if next == '/articles/create/'%}
+<div class="flash danger"><i class="fa-solid fa-circle-exclamation mr-.5"></i> Login required for create an article</div>
+{% endif %}
+        
     <form action="" method="POST" class="mt-4 max-w-360">
         {% csrf_token %}
             {{ form.as_p }}

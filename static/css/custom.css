@@ -15,12 +15,12 @@ li {
     margin-bottom: 1rem;
 }
 a{
-    text-decoration: none;
+    text-decoration: solid;
     color: var(--default) !important;
 }
-a:hover{
+/* a:hover{
     text-decoration: none !important;
-}
+} */
 
 .custom-link::after {
     content: attr(data-content);

@@ -2,68 +2,7 @@
 {% block title %} Articles {% endblock title %}
 {% block custom_style %} 
 <style>
-    .card {
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: all 0.2s;
-        border-radius: 8px;
-        overflow: hidden;
-        border: 1px solid var(--contrast);
-        background-color : var(--bg-muted)
-    }
-    .card:hover{
-        background-color : var(--bg-default)
-    }
-    .card img {
-        width: 100%;
-        height: 212px;
-    }
-    .card-content {
-        padding: 15px;
-    }
-    .card-title {
-        font-size: 1.2em;
-        margin: 0 0 10px 0;
-        text-decoration-color : var(--attention)
-    }
-    .card-text {
-        margin: 0 0 15px 0;
-    }
-    .card-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-top: 1px solid var(--contrast);
-        padding: 10px 15px;
-        color : #999;
-    }
-    .upvotes {
-        color: #999;
-        transition : all .1s ease;
-    }
-    .card:hover .upvotes{
-        color: #44f08e;
-        text-shadow: 1px 2px 11px rgb(42 238 109 / 80%);
-    }   
-    .author {
-        display: flex;
-        align-items: center;
-        margin-top: 15px;
-    }
-    .author img {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        margin : 0px 10px 0px 0px !important;
-    }
-    .author-name {
-        font-size: 0.9em;
-    }
-    .article-list {
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 20px;
-    }
+  
 </style>
 {% endblock custom_style %}
 {% block content %}
@@ -82,12 +21,15 @@
                         </div>
                     </a>
                      <div class="author">
-                        {% if article.author.img %}
-                        <img src="{{ article.author.img.url }}" alt="Author Image">
-                        {% else %}
-                        <img src="media/uploads/images/2024/06/images.png" alt="Author Image">
-                        {% endif %}
-                         <div class="author-name">{{ article.author.username}}</div>
+                         
+                         {% if article.author.img %}
+                         <img src="{{ article.author.img.url }}" alt="Author Image">
+                         {% else %}
+                         <img src="media/uploads/images/2024/06/images.png" alt="Author Image">
+                         {% endif %}
+                         <a href="{{ article.author.get_absolute_url }}">
+                            <div class="author-name">{{ article.author.username}}</div>
+                        </a>
                      </div>
                  </div>
                  <div class="card-footer small">

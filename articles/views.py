@@ -13,7 +13,7 @@ class ArticleDetailView(HitCountDetailView):
     model = Article
     template_name = 'articles/article_detail.html'
     context_object_name = 'article'
-    slug_field = 'slug'
+    pk_url_kwarg = 'id' # select using pk (if not set , select using slug)
     count_hit = True
 
 class ArticlesListView(ListView):

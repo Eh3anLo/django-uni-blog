@@ -27,6 +27,8 @@ urlpatterns = [
     path('articles/' , include('articles.urls')),
     path('authors/' , include('profiles.urls')),
     path('editorjs/', include('django_editorjs_fields.urls')),
+    path('hitcount/', include(('hitcount.urls', 'hitcount'), namespace='hitcount')),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

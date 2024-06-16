@@ -1,15 +1,20 @@
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView , CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django_editorjs_fields import EditorJsWidget
+from hitcount.views import HitCountDetailView
 from .forms import ArticleCreationForm
 from .models import Article
 # Create your views here.
-def article_detail_view(request , id , slug):
-    article = Article.objects.get(pk = id ,slug = slug)
-    return render(request , 'articles/article_detail.html' , { 'article' : article})
-
+class ArticleDetailView(HitCountDetailView):
+    model = Article
+    template_name = 'articles/article_detail.html'
+    context_object_name = 'article'
+    slug_field = 'slug'
+    count_hit = True
 
 class ArticlesListView(ListView):
     model = Article

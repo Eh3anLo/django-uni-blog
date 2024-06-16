@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # installed package
     'django_editorjs_fields',
+    'hitcount',
     # local
     'accounts',
     'profiles',

@@ -1,8 +1,10 @@
 from django.db import models
 from django.urls import reverse
-from django_editorjs_fields import EditorJsJSONField
+from django.contrib.contenttypes.fields import GenericRelation 
 from django.utils.text import slugify
-import uuid
+# import uuid
+from django_editorjs_fields import EditorJsJSONField
+from hitcount.models import HitCountMixin, HitCount
 # Create your models here.
 
 class Article(models.Model):
@@ -20,7 +22,8 @@ class Article(models.Model):
     date_last_modified = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=50 ,choices=status_choices)
     slug = models.SlugField(blank=True)
-    views = models.IntegerField(default=0)
+    views = GenericRelation(HitCount, object_id_field='object_pk',
+     related_query_name='hit_count_generic_relation')
     upvote = models.IntegerField(default=0)
 
     def __str__(self):

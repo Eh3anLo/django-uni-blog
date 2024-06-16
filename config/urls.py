@@ -25,6 +25,7 @@ urlpatterns = [
     path('accounts/' , include('django.contrib.auth.urls')),
     path('accoutns/' , include('accounts.urls')),
     path('articles/' , include('articles.urls')),
+    path('authors/' , include('profiles.urls')),
     path('editorjs/', include('django_editorjs_fields.urls')),
 ]
 if settings.DEBUG:

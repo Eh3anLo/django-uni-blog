@@ -1,0 +1,89 @@
+{% extends '_base.html' %}
+
+{% block title %}
+
+{% endblock %}
+{% block custom_style %}
+  <style>
+    .profile-header {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+    }
+    .profile-header img {
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      margin-right: 20px;
+    }
+    .profile-header .profile-info {
+      flex: 1;
+    }
+    .profile-section {
+      margin: 20px 0;
+    }
+    .profile-section h2 {
+      padding-bottom: 10px;
+    }
+    .achievements,
+    .activity-feed {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .achievement,
+    .activity {
+      flex: 1 1 45%;
+      margin: 10px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+  </style>
+{% endblock %}
+{% block content %}
+  <div class="container">
+    <div class="profile-header">
+      <img src="{{ user_profile.user.img.url }}" alt="Profile Picture" />
+      <div class="profile-info">
+        <p class="mb-0">{{ user_profile.user.username}}</p>
+        <h1 class="pb-1">{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}</h1>
+        <p>{{ user_profile.major }} | {{ user_profile.profession }}</p>
+      </div>
+    </div>
+
+    <div class="profile-section">
+      <h2>Bio</h2>
+      <p>{{ user_profile.bio }}</p>
+    </div>
+
+    <div class="profile-section">
+      <h2>Achievements</h2>
+      <div class="achievements">
+        <div class="achievement">
+          <h3>Competition Winner</h3>
+          <p>First place in XYZ Data Science Competition.</p>
+        </div>
+        <div class="achievement">
+          <h3>Top 1% in ABC Challenge</h3>
+          <p>Ranked in the top 1% in ABC Machine Learning Challenge.</p>
+        </div>
+        <!-- Add more achievements as needed -->
+      </div>
+    </div>
+
+    <div class="profile-section">
+      <h2>Activity Feed</h2>
+      <div class="activity-feed">
+        <div class="activity">
+          <h3>New Notebook Published</h3>
+          <p>Published a new notebook on Deep Learning techniques.</p>
+        </div>
+        <div class="activity">
+          <h3>Joined Competition</h3>
+          <p>Joined the XYZ Data Science Competition.</p>
+        </div>
+        <!-- Add more activities as needed -->
+      </div>
+    </div>
+  </div>
+{% endblock %}

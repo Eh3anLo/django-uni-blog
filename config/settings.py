@@ -143,3 +143,5 @@ LOGOUT_REDIRECT_URL = 'home'
 
 MEDIA_ROOT =  str(BASE_DIR.joinpath('media'))
 MEDIA_URL = '/media/'
+
+# ALLOWED_HOSTS = ['192.168.1.118']

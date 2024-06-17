@@ -1,5 +1,5 @@
 {% extends '_base.html' %}
-
+{% load static %}
 {% block title %}
 
 {% endblock %}
@@ -43,7 +43,11 @@
 {% block content %}
   <div class="container">
     <div class="profile-header">
-      <img src="{{ user_profile.user.img.url }}" alt="Profile Picture" />
+      {% if user_profile.user.img %}
+        <img src="{{ user_profile.user.img.url }}" alt="Author Image" />
+      {% else %}
+        <img src="{% static 'images/images.png' %}" alt="Author Image" />
+      {% endif %}
       <div class="profile-info">
         <p class="mb-0">{{ user_profile.user.username }}</p>
         <h1 class="pb-1">{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}</h1>
@@ -76,38 +80,36 @@
       <div class="activity-feed">
         <!-- Add more activities as needed -->
         <div class="article-list">
-            <!-- Repeat this block for each article -->
-            <!-- Add more articles here -->
-            {% load hitcount_tags %}
-             {% for article in articles %}
-             <div class="card">
-                 <img src="{{ article.img.url }}" alt="Article Image">
-                 <div class="card-content">
-                         <a href="{{ article.get_absolute_url }}">
-                             <div class="card-title bold underline ">{{ article.title }}</div>
-                            <div class="card-text normal">
-                                {{ article.description|truncatewords:10}}
-                            </div>
-                        </a>
-                         <div class="author">
-                            {% if article.author.img %}
-                            <img src="{{ article.author.img.url }}" alt="Author Image">
-                            {% else %}
-                            <img src="media/uploads/images/2024/06/images.png" alt="Author Image">
-                            {% endif %}
-                             <div class="author-name">{{ article.author.username}}</div>
-                         </div>
-                     </div>
-                     <div class="card-footer small">
-                         <span class=""><i class="fa-regular fa-clock mr-.5"></i>{{ article.date_created.date}}</span>
-                         <span>
-                             <span class="views mr-.5"><i class="fa-solid fa-eye"></i> {% get_hit_count for article%}</span>
-                             <span class="upvotes"><i class="fa-regular fa-thumbs-up"></i> {{ article.upvote}}</span>
-                        </span>
-                     </div>
-                 </div>
-             {% endfor %}
-            <!-- Repeat for more articles -->
+          <!-- Repeat this block for each article -->
+          <!-- Add more articles here -->
+          {% load hitcount_tags %}
+          {% for article in articles %}
+            <div class="card">
+              <img src="{{ article.img.url }}" alt="Article Image" />
+              <div class="card-content">
+                <a href="{{ article.get_absolute_url }}">
+                  <div class="card-title bold underline">{{ article.title }}</div>
+                  <div class="card-text normal">{{ article.description|truncatewords:10 }}</div>
+                </a>
+                <div class="author">
+                  {% if article.author.img %}
+                    <img src="{{ article.author.img.url }}" alt="Author Image" />
+                  {% else %}
+                    <img src="{% static 'images/images.png' %}" alt="Author Image" />
+                  {% endif %}
+                  <div class="author-name">{{ article.author.username }}</div>
+                </div>
+              </div>
+              <div class="card-footer small">
+                <span class=""><i class="fa-regular fa-clock mr-.5"></i>{{ article.date_created.date }}</span>
+                <span>
+                  <span class="views mr-.5"><i class="fa-solid fa-eye"></i> {% get_hit_count for article %}</span>
+                  <span class="upvotes"><i class="fa-regular fa-thumbs-up"></i> {{ article.upvote }}</span>
+                </span>
+              </div>
+            </div>
+          {% endfor %}
+          <!-- Repeat for more articles -->
         </div>
       </div>
     </div>

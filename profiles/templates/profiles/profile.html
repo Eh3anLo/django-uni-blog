@@ -85,7 +85,7 @@
           {% load hitcount_tags %}
           {% for article in articles %}
             <div class="card relatative">
-              {% if user.is_authenticated and user.username == article.author.username %}
+              {% if user.is_authenticated and user.id == article.author.id %}
               {% if article.status == 'crf'%}
               <output class="absolute mt-.5 ml-.5 small p-0 px-.25 attention bg-attention bd-attention">crafted</output>
               {% else %}
@@ -107,14 +107,16 @@
                     {% endif %}
                     <div class="author-name">{{ article.author.username }}</div>
                   </div>
-                  {% if user.is_authenticated and user.username == article.author.username %}
+                  {% if user.is_authenticated and user.id == article.author.id %}
                   <div>
                     <button class="accent">
                       <a href="{% url 'update_article' article.pk article.slug %}" class=""><i class="fa-regular fa-pen-to-square"></i></a>
                     </button>
-                    <button class="danger">
-                      <a href="" class=""><i class="fa-regular fa-trash-can"></i></a>
-                    </button>
+                      <button class="danger">
+                        <a href="{% url 'article_delete' article.id %}">
+                          <i class="fa-regular fa-trash-can"></i>
+                        </a>
+                      </button>
                   </div>
                   {% endif %}
 
@@ -135,3 +137,4 @@
     </div>
   </div>
 {% endblock %}
+

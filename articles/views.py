@@ -1,7 +1,7 @@
 from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView , CreateView
+from django.views.generic import ListView , CreateView , UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django_editorjs_fields import EditorJsWidget
@@ -24,13 +24,26 @@ class ArticlesListView(ListView):
     def get_queryset(self):
         return Article.objects.filter(status = 'pub')
 
-class ArticleCreationView(LoginRequiredMixin , CreateView):
+class ArticleCreateView(LoginRequiredMixin , CreateView):
     model = Article
     form_class = ArticleCreationForm
     template_name = 'articles/article_create.html'
     success_url = reverse_lazy('home')
     
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.author = self.request.user
+        obj.save
+        return super().form_valid(form)
+    
 
+class ArticleUpdateView(UpdateView):
+    model = Article
+    fields = [
+        'title' , 'img' , 'description' , 'status', 'body'
+    ]
+    success_url = reverse_lazy('home')
+    template_name = 'articles/article_update.html'
 
 # def article_detail_view_by_id(request , id , slug):
 #     article = Article.objects.get(pk = id , slug=slug)

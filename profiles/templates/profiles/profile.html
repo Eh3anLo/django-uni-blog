@@ -110,7 +110,7 @@
                   {% if user.is_authenticated and user.username == article.author.username %}
                   <div>
                     <button class="accent">
-                      <a href="" class=""><i class="fa-regular fa-pen-to-square"></i></a>
+                      <a href="{% url 'update_article' article.pk article.slug %}" class=""><i class="fa-regular fa-pen-to-square"></i></a>
                     </button>
                     <button class="danger">
                       <a href="" class=""><i class="fa-regular fa-trash-can"></i></a>

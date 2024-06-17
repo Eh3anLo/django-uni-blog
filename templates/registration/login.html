@@ -13,10 +13,10 @@ welcome but who are you?
     <form action="" method="POST" class="mt-4 max-w-360">
         {% csrf_token %}
             {{ form.as_p }}
-            <label class='mt-.5'>
+            {% comment %} <label class='mt-.5'>
                 <input type="checkbox" name="input-checkbox-example" value="Nier">
                 <small>remember me</small>
-              </label>
+              </label> {% endcomment %}
             <button type="submit" class=''>Login</button>
     </form>
 </section>

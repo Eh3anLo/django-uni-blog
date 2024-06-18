@@ -1,13 +1,14 @@
-from django.db.models.query import QuerySet
 from django.shortcuts import render
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.views.generic import ListView , CreateView , UpdateView , DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from django_editorjs_fields import EditorJsWidget
 from hitcount.views import HitCountDetailView
 from .forms import ArticleCreationForm
 from .models import Article
+
+
 # Create your views here.
 class ArticleDetailView(HitCountDetailView):
     model = Article
@@ -46,6 +47,15 @@ class ArticleUpdateView(UpdateView):
     success_url = reverse_lazy('home')
     template_name = 'articles/article_update.html'
 
+    def get_object(self, queryset=None):
+        """
+        Check the logged in user is the owner of the object or 404
+        """
+        obj = super(ArticleUpdateView, self).get_object(queryset)
+        if obj.author != self.request.user:
+            raise PermissionDenied()
+        return obj
+
 class ArticleDeleteView(DeleteView):
     model = Article
     success_url = reverse_lazy('home')
@@ -53,6 +63,11 @@ class ArticleDeleteView(DeleteView):
     context_object_name = 'article'
     template_name = "articles/article_delete.html"
 
-# def article_detail_view_by_id(request , id , slug):
-#     article = Article.objects.get(pk = id , slug=slug)
-#     return render(request , 'articles/article_detail.html' , { 'article' : article})
+    def get_object(self, queryset=None):
+        """
+        Check the logged in user is the owner of the object or 404
+        """
+        obj = super(ArticleDeleteView, self).get_object(queryset)
+        if obj.author != self.request.user:
+            raise PermissionDenied()
+        return obj

@@ -5,6 +5,8 @@ from django.utils.text import slugify
 # import uuid
 from django_editorjs_fields import EditorJsJSONField
 from hitcount.models import HitCountMixin, HitCount
+
+from accounts.models import CustomUser
 # Create your models here.
 
 class Article(models.Model):
@@ -24,7 +26,7 @@ class Article(models.Model):
     slug = models.SlugField(blank=True)
     views = GenericRelation(HitCount, object_id_field='object_pk',
      related_query_name='hit_count_generic_relation')
-    upvote = models.IntegerField(default=0)
+    upvotes = models.ManyToManyField(CustomUser , related_name="upvotes")
 
     def __str__(self):
         return self.title
@@ -37,3 +39,5 @@ class Article(models.Model):
     def get_absolute_url(self):
         return reverse("article_detail", kwargs={"id": self.pk , "slug" : self.slug})
     
+    def number_of_upvotes(self):
+        return self.upvotes.count()

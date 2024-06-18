@@ -37,8 +37,16 @@
                  <div class="card-footer small">
                      <span class=""><i class="fa-regular fa-clock mr-.5"></i>{{ article.date_created.date}}</span>
                      <span>
-                         <span class="views mr-.5"><i class="fa-solid fa-eye"></i> {% get_hit_count for article %}</span>
-                         <span class="upvotes"><i class="fa-regular fa-thumbs-up"></i> {{ article.upvote}}</span>
+                         <span class="views mr-.5">
+                             <i class="fa-solid fa-eye default"></i> 
+                            {% get_hit_count for article %}</span>
+                         <span class="upvotes">
+                            {% if user in article.upvotes.all %}
+                            <i class="fa-regular fa-thumbs-up success"></i> 
+                            {% else %}
+                            <i class="fa-regular fa-thumbs-up"></i> 
+                            {% endif %}
+                            {{ article.number_of_upvotes }}</span>
                     </span>
                  </div>
              </div>

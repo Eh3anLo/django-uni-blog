@@ -75,7 +75,8 @@ a{
 .card:hover .upvotes{
     color: #44f08e;
     text-shadow: 1px 2px 11px rgb(42 238 109 / 80%);
-}   
+}
+
 .author {
     display: flex;
     align-items: center;

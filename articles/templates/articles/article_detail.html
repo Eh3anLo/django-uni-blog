@@ -1,4 +1,5 @@
 {% extends '_base.html' %}
+{% load hitcount_tags %}
 {% block title %}
 {{ article.title }}
 {% endblock title %}
@@ -11,7 +12,27 @@
     <img src="{{ article.img.url }}" alt="">
     {% load editorjs %}
     {{ article.body | editorjs }}
+    <footer class="">
+        <span class=""><i class="fa-regular fa-clock mr-.5"></i>{{ article.date_created.date}}</span>
+        <span>
+            <span class="views mr-.5"><i class="fa-solid fa-eye"></i> {% get_hit_count for article %}
+            </span>
+            <span class="upvotes">
+                {% if article_is_upvoted %}
+                <button id="like" class="default success">
+                {% else %}
+                <button id="like" class="default">
+                {% endif %}
+                    <i class="fa-regular fa-thumbs-up"></i> 
+                </button>
+                <span id="like_count"> {{ number_of_upvotes }} </span>
+            </span>
+       </span>
+    </footer>
 </section>
+{% endblock content %}  
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js" integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     // Add <pre> element as parent to  all <code> element with class 'code'
     document.addEventListener("DOMContentLoaded", function() {
@@ -29,5 +50,21 @@
             codeElement.parentNode.replaceChild(preElement, codeElement);
         });
     });    
+        $(document).on('click', '#like', function(event){
+            event.preventDefault();
+            console.log("from jquery section")
+            $.ajax({
+                type: 'GET',
+                url: '{% url "upvote_article" article.id article.slug %}',
+            success: function(response){
+                $('#like_count').text(response)
+                $('#like').toggleClass('success')
+
+            },
+            error: function(rs, e){
+                console.log(rs.responseText);
+            },
+        });
+    });
 </script>
-{% endblock content %}  
+{% endblock script %}

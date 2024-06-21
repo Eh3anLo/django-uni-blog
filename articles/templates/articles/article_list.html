@@ -14,7 +14,9 @@
         {% load hitcount_tags %}
          {% for article in articles %}
          <div class="card">
-             <img src="{{ article.img.url }}" alt="Article Image">
+            {% if article.img %}
+            <img src="{{ article.img.url }}" alt="Article Image">
+            {% endif %}
              <div class="card-content">
                      <a href="{{ article.get_absolute_url }}">
                          <div class="card-title bold underline ">{{ article.title }}</div>

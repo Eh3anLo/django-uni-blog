@@ -23,7 +23,7 @@ class Article(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_last_modified = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=50 ,choices=status_choices)
-    slug = models.SlugField(blank=True)
+    slug = models.SlugField(max_length=200)
     views = GenericRelation(HitCount, object_id_field='object_pk',
      related_query_name='hit_count_generic_relation')
     upvotes = models.ManyToManyField(CustomUser , related_name="upvotes")
@@ -33,7 +33,10 @@ class Article(models.Model):
 
     def save(self, *args, **kwargs):
         # self.slug = slugify(self.title + '-' + str(self.id).split('-')[0] )
-        self.slug = slugify(self.title.lower())
+        if len(self.title) > 50:
+            self.slug = slugify(self.title[:50].lower())
+        else:
+            self.slug = slugify(self.title.lower())
         super(Article, self).save(*args, **kwargs)
 
     def get_absolute_url(self):

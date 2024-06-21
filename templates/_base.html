@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" data-color-scheme="dark">
+<html lang="en" data-color-scheme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -42,7 +42,7 @@
         </menu>
         <menu>
           {% if user.is_authenticated %}
-            <li class="accent" class="custom-link" data-content="logout">👤 {{ user.username }}</li>
+            <li class="accent" class="custom-link" data-content="logout"><a href="{% url 'user_profile' user.username %}">👤 {{ user.username }}</a></li>
             <form action="{% url 'logout' %}" method="POST" class="m-0 p-0 bg-default">
               {% csrf_token %}
               <button type="submit" class="small bg-default default mt-.75"><i class="fa-solid fa-right-from-bracket"></i></button>

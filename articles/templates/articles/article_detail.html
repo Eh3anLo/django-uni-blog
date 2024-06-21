@@ -9,7 +9,9 @@
     {{ article.title }}
 </h1>
 <section>
+    {% if article.img %}
     <img src="{{ article.img.url }}" alt="">
+    {% endif %}
     {% load editorjs %}
     {{ article.body | editorjs }}
     <footer class="">

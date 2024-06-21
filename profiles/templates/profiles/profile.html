@@ -92,7 +92,9 @@
               <output class="absolute mt-.5 ml-.5 small p-0 px-.25 success bg-success bd-success">published</output>
               {% endif %}
               {% endif %}
+              {% if article.img %}
               <img src="{{ article.img.url }}" alt="Article Image" />
+              {% endif %}
               <div class="card-content">
                 <a href="{{ article.get_absolute_url }}">
                   <div class="card-title bold underline">{{ article.title }}</div>
@@ -125,9 +127,17 @@
               <div class="card-footer small">
                 <span class=""><i class="fa-regular fa-clock mr-.5"></i>{{ article.date_created.date }}</span>
                 <span>
-                  <span class="views mr-.5"><i class="fa-solid fa-eye"></i> {% get_hit_count for article %}</span>
-                  <span class="upvotes"><i class="fa-regular fa-thumbs-up"></i> {{ article.upvote }}</span>
-                </span>
+                  <span class="views mr-.5">
+                      <i class="fa-solid fa-eye default"></i> 
+                     {% get_hit_count for article %}</span>
+                  <span class="upvotes">
+                     {% if user in article.upvotes.all %}
+                     <i class="fa-regular fa-thumbs-up success"></i> 
+                     {% else %}
+                     <i class="fa-regular fa-thumbs-up"></i> 
+                     {% endif %}
+                     {{ article.number_of_upvotes }}</span>
+             </span>
               </div>
             </div>
           {% endfor %}

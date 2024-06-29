@@ -1,0 +1,59 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block title %} Articles {% endblock title %}
+{% block custom_style %} 
+<style>
+  
+</style>
+{% endblock custom_style %}
+{% block content %}
+<section>
+    <div class="article-list">
+        <!-- Repeat this block for each article -->
+        <!-- Add more articles here -->
+        {% load hitcount_tags %}
+         {% for article in articles %}
+         <div class="card">
+            {% if article.img %}
+            <img src="{{ article.img.url }}" alt="Article Image">
+            {% endif %}
+             <div class="card-content">
+                     <a href="{{ article.get_absolute_url }}">
+                         <div class="card-title bold underline ">{{ article.title }}</div>
+                        <div class="card-text normal">
+                            {{ article.description|truncatewords:10}}
+                        </div>
+                    </a>
+                     <div class="author">
+                         
+                         {% if article.author.img %}
+                         <img src="{{ article.author.img.url }}" alt="Author Image">
+                         {% else %}
+                         <img src="{% static "images/images.png" %}" alt="Author Image">
+                         {% endif %}
+                         <a href="{{ article.author.get_absolute_url }}">
+                            <div class="author-name">{{ article.author.username}}</div>
+                        </a>
+                     </div>
+                 </div>
+                 <div class="card-footer small">
+                     <span class=""><i class="fa-regular fa-clock mr-.5"></i>{{ article.date_created.date}}</span>
+                     <span>
+                         <span class="views mr-.5">
+                             <i class="fa-solid fa-eye default"></i> 
+                            {% get_hit_count for article %}</span>
+                         <span class="upvotes">
+                            {% if user in article.upvotes.all %}
+                            <i class="fa-regular fa-thumbs-up success"></i> 
+                            {% else %}
+                            <i class="fa-regular fa-thumbs-up"></i> 
+                            {% endif %}
+                            {{ article.number_of_upvotes }}</span>
+                    </span>
+                 </div>
+             </div>
+         {% endfor %}
+        <!-- Repeat for more articles -->
+    </div>
+</section>
+{% endblock content %}

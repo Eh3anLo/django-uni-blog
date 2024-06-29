@@ -18,12 +18,15 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path , include
+from django.views.generic import TemplateView
+
 from articles.views import ArticlesListView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('' , ArticlesListView.as_view()  , name='home'),
+    path('' , TemplateView.as_view(template_name = "home.html")  , name='home'),
     path('accounts/' , include('django.contrib.auth.urls')),
-    path('accoutns/' , include('accounts.urls')),
+    path('accounts/' , include('accounts.urls')),
     path('articles/' , include('articles.urls')),
     path('authors/' , include('profiles.urls')),
     path('editorjs/', include('django_editorjs_fields.urls')),

@@ -1,42 +1,93 @@
-{% extends '_base.html'%}
+{% extends "_base.html"%}
+{% load static %}
 
-{% block title %}
-welcome :) Join us
-{% endblock title %}
+{% block style %}
+<link rel="stylesheet" href="{% static "css/request.css"%}" />
+{% endblock style %}
+{% block script_start %}
+<script src="{% static "js/request.js"%}" defer></script>
+{% endblock script_start %}
+
+{% block title %}ثبت نام{% endblock title %}
+{% block nav_list %}
+<li class=""><a href="{% url "home" %}">خانه</a></li>
+{% endblock nav_list %}
 
 {% block content %}
-<section>
-    <form action="" method="POST" class="max-w-400">
-        {% csrf_token %}
-           <fieldset class='pb-1'>
-                <legend class='small'>user info</legend>
-                {{ form.username.label}}:
-                {{ form.username }}
-                <div class='inline flex mt-1 mb-1'>
-                    <span>
-                        {{ form.last_name.label }}:
-                        {{form.last_name}}
-                    </span>
-                    <span class='ml-1'>
-                        {{ form.first_name.label }}:
-                        {{form.first_name}}
-                    </span>
-                </div>
-                {{form.email.label}}:
-                {{ form.email}}
-                <div class='mt-1 mb-.5'>
-                {{ form.password1.label }}:
-                {{ form.password1 }}
-                    {{ form.password2.label }}:
-                {{ form.password2 }}
+{% for field in form %}
+{{ field.errors }}
+{% endfor %}    <!-- End header section -->
+    <!-- notification -->
+    <div id="message">
+      <div class="rectangle" id="successMsg">
+        <div class="notification-text">
+          <i class="fas fa-exclamation-circle" style="font-size: 20px">&nbsp;&nbsp;</i>
+          <span>&nbsp;&nbsp;اطلاعات با موفقیت ارسال شد.</span>
+        </div>
+      </div>
+      {% if field.errors %}
+      <div class="rectangle  animate__animated animate__fadeInRight error" id="successMsg">
+          <div class="notification-text">
+              <i class="fas fa-exclamation-circle" style="font-size: 20px">&nbsp;&nbsp;</i>
+              
+              <span>&nbsp;&nbsp; {{field.errors}}</span>
             </div>
-            {% for field in form %}
-    <div class="fieldWrapper">
-        {{ field.errors }}
+        </div>
+        {% endif %}
     </div>
-{% endfor %}
-    <button type="submit" class=''>signup</button>
-    </fieldset>
-</form>
-</section>
-{% endblock content %}
+
+    <!-- End notification -->
+    <sectoin id="main">
+        <div class="container main">
+          <div class="main-img animate__animated animate__fadeInRight">
+            <img src="{% static "images/signup.jpg" %}" alt="enter" />
+          </div>
+          <form action="" method="POST" id="send-request-form">
+            {% csrf_token %}
+              {{ form.username }}
+              <div class="row">
+                {{ form.first_name}}
+                {{ form.last_name}}
+              <!-- will be persian data picker later and in date type-->
+            </div>
+            {{form.email}}
+            {{ form.password1}}
+            {{ form.password2}}
+
+            <input type="submit" class="btn" value="ثبت نام" id="submitBtn" />
+            <!-- loader -->
+            <div class="loader loader--style2" title="1">
+              <svg
+                version="1.1"
+                id="loader-1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px"
+                y="0px"
+                width="40px"
+                height="40px"
+                viewBox="0 0 50 50"
+                style="enable-background: new 0 0 50 50"
+                xml:space="preserve"
+              >
+                <path
+                  fill="#000"
+                  d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z"
+                >
+                  <animateTransform
+                    attributeType="xml"
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 25 25"
+                    to="360 25 25"
+                    dur="0.6s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+              </svg>
+            </div>
+          </form>
+        </div>
+      </sectoin>
+    {% endblock content %}
+

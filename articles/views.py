@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect , HttpResponse
+from django.http import HttpResponseRedirect , HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse, reverse_lazy
@@ -94,4 +94,4 @@ def article_upvotes_view(request , id , slug):
         article.upvotes.add(request.user.id)
 
     # return HttpResponseRedirect(reverse('article_detail', args=[id , slug]))   
-    return HttpResponse(article.number_of_upvotes())
+    return JsonResponse({'upvote' : article.number_of_upvotes()})

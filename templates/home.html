@@ -1,20 +1,98 @@
-{% extends '_base.html'%}
-
+{% extends "_base.html" %}
+{% load static %}
 {% block title %}
-home page
+نشریات دانشجویی منتظری
 {% endblock title %}
 
+{% block nav_list %}
+<li class=""><a href="{% url "login" %}">ورود</a></li>
+<li class="btn-menu"><a href="{% url "signup" %}">ثبت نام</a></li>
+{% endblock nav_list %}
+
 {% block content %}
-<h1>Welcome to Uni Blog
-    <span class='success'>
-        {{ user.username }}
-    </span>
-</h1>
-<small>we are developing with this steps:</small>
-<ul>
-    <li>Create user and profile</li>
-    <li>Create Login and Logout sys + Sign up</li>
-    <li>Create Post and the pages for it</li>
-</ul>
-<small>some footer :) </small>
+<main>
+    <section id="intro" class="container">
+        <div class="context">
+            <h2 class="w-bold">به<span class="green"> نشریات </span> دانشجویی گروه کامپیوتر <span
+                    class="cobalt">منتظری</span> خوش آمدید.</h2>
+            <p class="sub-context txt-align-justify">
+                اینجا محلی برای اشتراک‌گذاری مقالات و نوشته‌های علمی شماست، جایی که می‌توانید با هم‌افزایی و تبادل
+                نظر،
+                مهارت‌های نوشتاری خود را تقویت کنید و به رشد علمی یکدیگر کمک کنید.</p>
+            <a class="btn-menu btn-intro" href="{% url "login" %}">ورود</a>
+        </div>
+        <img src="{% static "images/home-intro.jpg"%}" alt="article-intro">
+    </section>
+
+    <div class="title">
+        <span class="line"></span>
+        <h2>امکانات</h2>
+    </div>
+
+    <section id="utility">
+
+        <section id="editor-js" class="container">
+            <div class="context">
+                <h2 class="w-bold">ویرایشگر متن (EditorJS)
+                </h2>
+                <p class="sub-context txt-align-justify">
+                    با ویرایشگر متن (EditorJS)، می‌توانید مقالات و نوشته‌های خود را به راحتی و با قالب‌بندی‌های
+                    متنوع ایجاد و ویرایش کنید. این ویرایشگر به شما امکان می‌دهد تا محتوای خود را به بهترین شکل ارائه
+                    دهید و خلاقیت خود را به نمایش بگذارید.
+
+                </p>
+            </div>
+            <img src="{% static "images/editor-js.jpg" %}" alt="editor-intro">
+        </section>
+
+        <section id="upvote-sec" class="container">
+            <div class="context">
+                <h2 class="w-bold">
+                    سیستم آپ وت و ترندینگ (Upvote & Trending)
+                </h2>
+                <p class="sub-context txt-align-justify">
+                    با سیستم آپ وت، کاربران می‌توانند به مقالات و نوشته‌های شما رای بدهند و آن‌ها را به لیست ترندینگ
+                    برسانند. هرچه تعداد رای‌ها بیشتر باشد، مقاله شما بیشتر دیده می‌شود و در لیست محبوب‌ترین مقالات
+                    قرار می‌گیرد.
+
+                </p>
+            </div>
+            <img src="{% static "images/upvote.jpg" %}" alt="upvote-intro">
+        </section>
+
+        <section id="progress" class="container">
+            <div class="context">
+                <h2 class="w-bold">
+                    سیستم ارزیابی پیشرفت (Progressive System)
+                </h2>
+                <p class="sub-context txt-align-justify">
+                    سیستم ارزیابی پیشرفت به شما کمک می‌کند تا با هر نظر و رای اساتید و نویسنده های برترسطح خود را در
+                    سایت ارتقاء دهید. این سیستم برای تشویق شما به مشارکت فعال و تولید محتوای با کیفیت طراحی شده است
+                    تا همواره بتوانید پیشرفت خود را دنبال کنید.
+                </p>
+            </div>
+            <img src="{% static "images/progress.jpg" %}" alt="upvote-intro">
+        </section>
+    </section>
+
+    <section id="signup-sec" class="container bg-light-blue snow">
+        <div class="context">
+            <h2 class="w-bold snow">
+                همین حالا شروع به نوشتن کنید.
+            </h2>
+            <p class="sub-context txt-align-justify snow">
+                اینجا جاییه که می‌تونید مقالات و نوشته‌هاتون رو به اشتراک بذارید، از دیگران یاد بگیرید و با لایک و
+                کامنت، امتیاز جمع کنید و سطح خودتون رو بالا ببرید. به جمع ما بپیوندید و در این مسیر علمی همراه هم
+                باشیم! ثبت‌نام کنید و شروع کنید!
+            </p>
+        </div>
+        <div class="btn-sign-up-sec">
+            <a class="btn-menu btn-intro" href="{% url 'signup' %}">ثبت نام</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>تهیه شده با تلاش و راهنمایی بسیار :)</p>
+    </footer>
+</main>
 {% endblock content %}

@@ -1,59 +1,92 @@
 {% extends '_base.html' %}
 {% load static %}
-{% block title %} Articles {% endblock title %}
-{% block custom_style %} 
-<style>
-  
-</style>
-{% endblock custom_style %}
-{% block content %}
-<section>
-    <div class="article-list">
-        <!-- Repeat this block for each article -->
-        <!-- Add more articles here -->
-        {% load hitcount_tags %}
-         {% for article in articles %}
-         <div class="card">
-            {% if article.img %}
-            <img src="{{ article.img.url }}" alt="Article Image">
-            {% endif %}
-             <div class="card-content">
-                     <a href="{{ article.get_absolute_url }}">
-                         <div class="card-title bold underline ">{{ article.title }}</div>
-                        <div class="card-text normal">
-                            {{ article.description|truncatewords:10}}
-                        </div>
-                    </a>
-                     <div class="author">
-                         
-                         {% if article.author.img %}
-                         <img src="{{ article.author.img.url }}" alt="Author Image">
-                         {% else %}
-                         <img src="{% static "images/images.png" %}" alt="Author Image">
-                         {% endif %}
-                         <a href="{{ article.author.get_absolute_url }}">
-                            <div class="author-name">{{ article.author.username}}</div>
-                        </a>
-                     </div>
-                 </div>
-                 <div class="card-footer small">
-                     <span class=""><i class="fa-regular fa-clock mr-.5"></i>{{ article.date_created.date}}</span>
-                     <span>
-                         <span class="views mr-.5">
-                             <i class="fa-solid fa-eye default"></i> 
-                            {% get_hit_count for article %}</span>
-                         <span class="upvotes">
-                            {% if user in article.upvotes.all %}
-                            <i class="fa-regular fa-thumbs-up success"></i> 
-                            {% else %}
-                            <i class="fa-regular fa-thumbs-up"></i> 
-                            {% endif %}
-                            {{ article.number_of_upvotes }}</span>
-                    </span>
-                 </div>
-             </div>
-         {% endfor %}
-        <!-- Repeat for more articles -->
+{% block title %}
+  بلاگ
+{% endblock %}
+{% block nav_list %}
+  <li class="btn-menu">
+    <a href="{% url 'create_article' %}">نوشتن <i class="fa-regular fa-pen-to-square"></i></a>
+  </li>
+  <!-- <li class=""><a href="">ثبت نام</a></li> -->
+  <li>
+    <div class="user-profile-link">
+      <a href="{% url 'user_profile' user %}">{{ user.username }}</a>
+      {% if user.img %}
+        <img class="user-pic" src="{{ user.img.url }}" alt="user-avatar" />
+      {% endif %}
     </div>
-</section>
-{% endblock content %}
+  </li>
+{% endblock %}
+{% block content %}
+  <section id="article-list" class="">
+    <main>
+      {% load hitcount_tags %}
+      {% for article in articles %}
+      <div class="card">
+          <a href="{{ article.get_absolute_url }}">
+          {% if article.img %}
+          <img src="{{ article.img.url }}" alt="تصویر مقاله" class="card-image" />
+          {% endif %}
+          <div class="card-content">
+                  <h2 class="card-title">{{ article.title }}</h2>
+                  <p class="card-description">{{ article.description|truncatewords:10 }}</p>
+                </a>
+              <div class="card-author">
+                <div class="card-author">
+                    <a href="{% url 'user_profile' article.author %}">
+                        {% if article.author.img %}
+                        <img src="{{ article.author.img.url }}" alt="تصویر نویسنده" class="author-image" />
+                        {% endif %}
+                        <div class="author-info">
+                            <p class="author-name">{{ article.author.username }}</p>
+                        </a>
+                            <p class="publish-date">{{ article.date_created.date }}</p>
+                        </div>
+                </div>
+                <div class="card-author">
+                  <div class="card-item-link">
+                    {% get_hit_count for article %}
+                    <i class="fa-solid fa-eye"></i>
+                  </div>
+                  <div class="card-item-link">
+                    {{ article.number_of_upvotes }}
+                    <i class="fa-solid fa-arrow-up"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      {% endfor %}
+    </main>
+    <aside>
+      <div class="related-articles">
+        <h3>مقالات مرتبط</h3>
+        <ul>
+          <li>
+            <a href="#">عنوان مقاله مرتبط ۱</a>
+          </li>
+          <li>
+            <a href="#">عنوان مقاله مرتبط ۲</a>
+          </li>
+          <li>
+            <a href="#">عنوان مقاله مرتبط ۳</a>
+          </li>
+        </ul>
+      </div>
+      <div class="tags">
+        <h3>برچسب‌ها</h3>
+        <ul>
+          <li>
+            <a href="#">برچسب ۱</a>
+          </li>
+          <li>
+            <a href="#">برچسب ۲</a>
+          </li>
+          <li>
+            <a href="#">برچسب ۳</a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+  </section>
+{% endblock %}

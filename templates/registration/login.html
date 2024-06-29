@@ -1,23 +1,91 @@
-{% extends '_base.html'%}
+{% extends "_base.html"%}
+{% load static %}
 
-{% block title %}
-welcome but who are you?
-{% endblock title %}
+{% block style %}
+<link rel="stylesheet" href="{% static "css/login.css"%}" />
+{% endblock style %}
+
+{% block script_start %}
+<script src="{% static "js/login.js"%}" defer></script>
+{% endblock script_start %}
+
+{% block title %}ورود{% endblock title %}
+  <body>
+    <!-- header section -->
+{% block nav_list %}
+<li class=""><a href="{% url "home" %}">خانه</a></li>
+{% endblock nav_list %}
 
 {% block content %}
-<section>
-{% if next == '/articles/create/'%}
-<div class="flash danger"><i class="fa-solid fa-circle-exclamation mr-.5"></i> Login required for create an article</div>
-{% endif %}
+
+    <!-- End header section -->
+    <!-- notification -->
+    <div id="message">
+      <div class="rectangle" id="successMsg">
+        <div class="notification-text">
+          <i class="fas fa-exclamation-circle" style="font-size: 20px">&nbsp;&nbsp;</i>
+          <span>&nbsp;&nbsp;اطلاعات با موفقیت ارسال شد.</span>
+        </div>
+      </div>
+      {% if form.non_field_errors %}
+      <div class="rectangle  animate__animated animate__fadeInRight error" id="successMsg">
+          <div class="notification-text">
+              <i class="fas fa-exclamation-circle" style="font-size: 20px">&nbsp;&nbsp;</i>
+              
+              <span>&nbsp;&nbsp; {{form.non_field_errors}}</span>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- End notification -->
+    <sectoin id="main">
+      <div class="container main">
+        <div class="main-img animate__animated animate__fadeIn">
+          <h4>نشریات دانشجویی منتظری
+          </h4>
+          <img src="{% static "images/login.jpg"%}" alt="enter" />
+        </div>
         
-    <form action="" method="POST" class="mt-4 max-w-360">
-        {% csrf_token %}
-            {{ form.as_p }}
-            {% comment %} <label class='mt-.5'>
-                <input type="checkbox" name="input-checkbox-example" value="Nier">
-                <small>remember me</small>
-              </label> {% endcomment %}
-            <button type="submit" class=''>Login</button>
-    </form>
-</section>
-{% endblock content %}
+        <form name="enter" id="entry-form" method="POST">
+            {% csrf_token %}
+          <h3>ورود</h3>
+          {{ form.username }}
+          {{ form.password }}
+          <input type="submit" value="ورود" id="btn" />
+          <!-- loader -->
+          <div class="loader loader--style2" title="1">
+            <svg
+              version="1.1"
+              id="loader-1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              x="0px"
+              y="0px"
+              width="40px"
+              height="40px"
+              viewBox="0 0 50 50"
+              style="enable-background: new 0 0 50 50"
+              xml:space="preserve"
+            >
+              <path
+                fill="#000"
+                d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z"
+              >
+                <animateTransform
+                  attributeType="xml"
+                  attributeName="transform"
+                  type="rotate"
+                  from="0 25 25"
+                  to="360 25 25"
+                  dur="0.6s"
+                  repeatCount="indefinite"
+                />
+              </path>
+            </svg>
+          </div>
+        </form>
+      </div>
+    </sectoin>
+    {% endblock content %}
+

@@ -50,8 +50,7 @@
         <form name="enter" id="entry-form" method="POST">
             {% csrf_token %}
           <h3>ورود</h3>
-          {{ form.username }}
-          {{ form.password }}
+          {{form.email}}
           <input type="submit" value="ورود" id="btn" />
           <!-- loader -->
           <div class="loader loader--style2" title="1">

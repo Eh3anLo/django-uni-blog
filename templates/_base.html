@@ -1,47 +1,64 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <title>{% block title %}{% endblock%}</title>
-    {% block style %}{% endblock style %}
-    {% block script_start %}{% endblock script_start %}
-</head>
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
 
-<body>
+    <script>
+      hljs.highlightAll()
+    </script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <title>
+      {% block title %}
+      {% endblock %}
+    </title>
+    {% block style %}
+    {% endblock %}
+    {% block script_start %}
+    {% endblock %}
+  </head>
+
+  <body>
     <header>
-        <nav>
-            <div class="logo">
-                <img src="{% static "images/tvu_logo.png" %}" alt="montazeri uni">
-                <a href="{% url "home"%}" class="home-link">
-                    <span class="greeny">نشریات</span>
-                    <span class="lighter">دانشجویی</span>
-                </a>
-            </div>
-            <div class="search-bar" style="display: none;">
-    
-            </div>
-            <menu class="nav-list">
-                {% comment %} <li class=""><a href="login.html">ورود</a></li>
-                <li class="btn-menu"><a href="">ثبت نام</a></li>  {% endcomment %}
-                {% block nav_list %}{% endblock nav_list %}
-            </menu>
-        </nav>
+      <nav>
+        <div class="logo">
+          <img src="{% static 'images/tvu_logo.png' %}" alt="montazeri uni" />
+          <a href="{% url 'article_list' %}" class="home-link">
+            <span class="greeny">نشریات</span>
+            <span class="lighter">دانشجویی</span>
+          </a>
+        </div>
+        <div class="search-bar" style="display: none;"></div>
+        <menu class="nav-list">
+          {% comment %} <li class="">
+            <a href="login.html">ورود</a>
+          </li>
+          <li class="btn-menu">
+            <a href="">ثبت نام</a>
+          </li> {% endcomment %}
+          {% block nav_list %}
+          {% endblock %}
+        </menu>
+      </nav>
     </header>
     {% block content %}
-    {% endblock content %}
-</body>
-{% block script_end %}{% endblock script_end %}
 
+    {% endblock %}
+    <footer>
+      <p>تهیه شده با تلاش و راهنمایی بسیار :)</p>
+    </footer>
+  </body>
+  {% block script_end %}
+  {% endblock %}
 </html>

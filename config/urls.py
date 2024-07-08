@@ -20,12 +20,15 @@ from django.conf.urls.static import static
 from django.urls import path , include
 from django.views.generic import TemplateView
 
+from . import views
 from articles.views import ArticlesListView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('' , TemplateView.as_view(template_name = "home.html")  , name='home'),
-    path('accounts/' , include('django.contrib.auth.urls')),
+    # path('' , TemplateView.as_view(template_name = "home.html")  , name='home'),
+    path('' , views.home_page , name='home'),
+    # path('accounts/' , include('django.contrib.auth.urls')),
     path('accounts/' , include('accounts.urls')),
     path('articles/' , include('articles.urls')),
     path('authors/' , include('profiles.urls')),

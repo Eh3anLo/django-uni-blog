@@ -44,16 +44,7 @@
           </div>
           <form action="" method="POST" id="send-request-form">
             {% csrf_token %}
-              {{ form.username }}
-              <div class="row">
-                {{ form.first_name}}
-                {{ form.last_name}}
-              <!-- will be persian data picker later and in date type-->
-            </div>
-            {{form.email}}
-            {{ form.password1}}
-            {{ form.password2}}
-
+              {{ form.as_p }}
             <input type="submit" class="btn" value="ثبت نام" id="submitBtn" />
             <!-- loader -->
             <div class="loader loader--style2" title="1">

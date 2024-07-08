@@ -1,16 +1,24 @@
 {% extends '_base.html' %}
 {% load static %}
+{% load hitcount_tags %}
+
 {% block title %}
   بلاگ
 {% endblock %}
 {% block nav_list %}
+<li class="btn-menu bg-light-blue">
+  <form action="{% url "signout" %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="خروج" style="background: none;border: none;cursor: pointer;">
+  </form>
+</li>
   <li class="btn-menu">
     <a href="{% url 'create_article' %}">نوشتن <i class="fa-regular fa-pen-to-square"></i></a>
   </li>
   <!-- <li class=""><a href="">ثبت نام</a></li> -->
   <li>
     <div class="user-profile-link">
-      <a href="{% url 'user_profile' user %}">{{ user.username }}</a>
+      <a href="{% url 'user_profile' user.username %}">{{ user.username }}</a>
       {% if user.img %}
         <img class="user-pic" src="{{ user.img.url }}" alt="user-avatar" />
       {% endif %}
@@ -20,20 +28,19 @@
 {% block content %}
   <section id="article-list" class="">
     <main>
-      {% load hitcount_tags %}
       {% for article in articles %}
       <div class="card">
-          <a href="{{ article.get_absolute_url }}">
+          <a href="{{ article.get_absolute_url }}" class="card-image-link">
           {% if article.img %}
           <img src="{{ article.img.url }}" alt="تصویر مقاله" class="card-image" />
           {% endif %}
           <div class="card-content">
                   <h2 class="card-title">{{ article.title }}</h2>
-                  <p class="card-description">{{ article.description|truncatewords:10 }}</p>
-                </a>
+                  <p class="card-description">{{ article.description|truncatewords:30 }}</p>
+          </a>
               <div class="card-author">
                 <div class="card-author">
-                    <a href="{% url 'user_profile' article.author %}">
+                    <a href="{% url 'user_profile' article.author.username %}">
                         {% if article.author.img %}
                         <img src="{{ article.author.img.url }}" alt="تصویر نویسنده" class="author-image" />
                         {% endif %}
@@ -56,6 +63,7 @@
               </div>
             </div>
           </div>
+        </div>
       {% endfor %}
     </main>
     <aside>

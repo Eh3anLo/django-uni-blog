@@ -3,7 +3,19 @@ from django.contrib.auth.forms import UserChangeForm , AuthenticationForm , User
 from django.forms.widgets import PasswordInput , TextInput
 from .models import CustomUser
 
+class EmailForm(forms.Form):
+    email = forms.EmailField(
+        label="ایمیل",
+widget=forms.TextInput(attrs={"placeholder" :  "ایمیل" , "type" : "email"})        
+    )
 
+class OTPForm(forms.Form):
+    otp = forms.CharField(max_length=6,
+                                  label="رمز یک بار مصرف",
+        widget=forms.TextInput(attrs={"placeholder" :  "کد عبور"})
+        )
+
+    
 class CustomUserCreationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -47,15 +59,9 @@ class CustomAuthenticationForm(AuthenticationForm):
         widget=TextInput(
         attrs={"autofocus": True, "placeholder" : TEXT_HOLDER['username']}),
         )
-    password = forms.CharField(
-        label=("رمز عبور"),
-        strip=False,
-        widget=PasswordInput(
-            attrs={"autocomplete": "current-password" , "placeholder" : TEXT_HOLDER["password"]}, ),
-    )
     error_messages = {
         "invalid_login": (
          TEXT_HOLDER["invalid_login"]
         ),
-        "inactive": (TEXT_HOLDER["inactive"]),
+        "inactive": (TEXT_HOLDER["inactive"])
     }

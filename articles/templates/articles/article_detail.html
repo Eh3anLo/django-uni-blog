@@ -3,37 +3,101 @@
 {% block title %}
 {{ article.title }}
 {% endblock title %}
-
+{% block nav_list %}
+<li class="btn-menu bg-light-blue">
+  <form action="{% url "signout" %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="خروج" style="background: none;border: none;cursor: pointer;">
+  </form>
+</li>
+  <li class="btn-menu">
+    <a href="{% url 'create_article' %}">نوشتن <i class="fa-regular fa-pen-to-square"></i></a>
+  </li>
+  <!-- <li class=""><a href="">ثبت نام</a></li> -->
+  <li>
+    <div class="user-profile-link">
+      <a href="{% url 'user_profile' user.username %}">{{ user.username }}</a>
+      {% if user.img %}
+        <img class="user-pic" src="{{ user.img.url }}" alt="user-avatar" />
+      {% endif %}
+    </div>
+  </li>
+{% endblock %}
 {% block content %}
-<h1>
-    {{ article.title }}
-</h1>
-<section>
-    {% if article.img %}
-    <img src="{{ article.img.url }}" alt="">
-    {% endif %}
-    {% load editorjs %}
-    {{ article.body | editorjs }}
-    <footer class="">
-        <span class=""><i class="fa-regular fa-clock mr-.5"></i>{{ article.date_created.date}}</span>
-        <span>
-            <span class="views mr-.5"><i class="fa-solid fa-eye"></i> {% get_hit_count for article %}
-            </span>
-            <span class="upvotes">
-                {% if article_is_upvoted %}
-                <button id="like" class="default success">
-                {% else %}
-                <button id="like" class="default">
-                {% endif %}
-                    <i class="fa-regular fa-thumbs-up"></i> 
-                </button>
-                <span id="like_count"> {{ number_of_upvotes }} </span>
-            </span>
-       </span>
-    </footer>
+<section id="article-list">
+    <main class="article-content">
+        <h1>
+            {{ article.title }}
+        </h1>
+        {% if article.img %}
+        <img src="{{ article.img.url }}" alt="">
+        {% endif %}
+        {% load editorjs %}
+        {{ article.body | editorjs }}
+        <footer class="">
+            <span class="date"><i class="fa-regular fa-clock mr-.5"></i>{{ article.date_created.date}}</span>
+            <span>
+                <span class="views mr-.5"><i class="fa-solid fa-eye"></i> {% get_hit_count for article %}
+                </span>
+                <span class="upvotes">
+                    {% if article_is_upvoted %}
+                    <button id="like" class="default success">
+                    {% else %}
+                    <button id="like" class="default">
+                    {% endif %}
+                        <i class="fa-regular fa-thumbs-up"></i> 
+                    </button>
+                    <span id="like_count"> {{ number_of_upvotes }} </span>
+                </span>
+           </span>
+        </footer>
+    </main>
+    <aside id="user_info">
+      {% if article.author.img %}
+      <img class="user_img_profile" src="{{ article.author.img.url }}" alt="user_avatar">
+      {% endif %}
+        <div class="user_names">
+            <span>{{ article.author.username}}</span>
+            <h2>
+              {{ article.author.first_name }}
+              {{ article.author.last_name }}
+            </h2>
+        </div>
+        <div class="related-articles">
+          <h3>مقالات دیگر این نویسنده</h3>
+          <ul>
+            {% if author_articles.count > 1 %}
+            {% for a_articke in author_articles %}
+            <li>
+              <a href="{{ a_articke.get_absolute_url }}">{{ a_articke.title }}۳</a>
+            </li>
+            {% endfor %}
+            {% else %}
+            <li>
+              <a href="{{ author_articles.get_absolute_url }} ">{{ author_articles.title }}۳</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+        <div class="tags">
+          <h3>برچسب‌ها</h3>
+          <ul>
+            <li>
+              <a href="#">برچسب ۱</a>
+            </li>
+            <li>
+              <a href="#">برچسب ۲</a>
+            </li>
+            <li>
+              <a href="#">برچسب ۳</a>
+            </li>
+          </ul>
+        </div>
+    </aside>
 </section>
 {% endblock content %}  
-{% block script %}
+
+{% block script_end %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js" integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     // Add <pre> element as parent to  all <code> element with class 'code'
@@ -69,4 +133,4 @@
         });
     });
 </script>
-{% endblock script %}
+{% endblock script_end %}

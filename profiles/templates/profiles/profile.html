@@ -1,150 +1,129 @@
-{% extends '_base.html' %}
+{% extends "_base.html" %}
 {% load static %}
+{% load hitcount_tags %}
 {% block title %}
 
-{% endblock %}
-{% block custom_style %}
-  <style>
-    .profile-header {
-      display: flex;
-      align-items: center;
-      padding: 20px;
-    }
-    .profile-header img {
-      border-radius: 50%;
-      width: 100px;
-      height: 100px;
-      margin-right: 20px;
-    }
-    .profile-header .profile-info {
-      flex: 1;
-    }
-    .profile-section {
-      margin: 20px 0;
-    }
-    .profile-section h2 {
-      padding-bottom: 10px;
-    }
-    .achievements,
-    .activity-feed {
-      display: flex;
-      flex-wrap: wrap;
-    }
-    .achievement,
-    .activity {
-      flex: 1 1 45%;
-      margin: 10px;
-      padding: 20px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-    }
-  </style>
-{% endblock %}
+{% endblock title %}
+{% block nav_list %}
+{% if user.id == author_id %}
+<li class="btn-menu">
+    <a href="">
+        تنظیمات حساب کاربری
+    </a>
+</li>
+{% endif %}
+<li class="btn-menu"><a href="">نوشتن <i class="fa-regular fa-pen-to-square"></i> </a></li>
+<!-- <li class=""><a href="">ثبت نام</a></li> -->
+<li>
+    <div class="user-profile-link">
+        <a href="{% url "user_profile" user.username %}">{{ user.username }}</a>
+        {% if user.img %}
+        <img class="user-pic" src="{{ user.img.url }}" alt="user-avatar">
+        {% endif %}
+    </div>
+</li>
+{% endblock nav_list %}
+
 {% block content %}
-  <div class="container">
-    <div class="profile-header">
-      {% if user_profile.user.img %}
-        <img src="{{ user_profile.user.img.url }}" alt="Author Image" />
-      {% else %}
-        <img src="{% static 'images/images.png' %}" alt="Author Image" />
-      {% endif %}
-      <div class="profile-info">
-        <p class="mb-0">{{ user_profile.user.username }}</p>
-        <h1 class="pb-1">{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}</h1>
-        <p>{{ user_profile.major }} | {{ user_profile.profession }}</p>
-      </div>
-    </div>
-
-    <div class="profile-section">
-      <h2>Bio</h2>
-      <p>{{ user_profile.bio }}</p>
-    </div>
-
-    <div class="profile-section">
-      <h2>Achievements</h2>
-      <div class="achievements">
-        <div class="achievement">
-          <h3>Competition Winner</h3>
-          <p>First place in XYZ Data Science Competition.</p>
-        </div>
-        <div class="achievement">
-          <h3>Top 1% in ABC Challenge</h3>
-          <p>Ranked in the top 1% in ABC Machine Learning Challenge.</p>
-        </div>
-        <!-- Add more achievements as needed -->
-      </div>
-    </div>
-
-    <div class="profile-section">
-      <h2>Activity Feed</h2>
-      <div class="activity-feed">
-        <!-- Add more activities as needed -->
-        <div class="article-list">
-          <!-- Repeat this block for each article -->
-          <!-- Add more articles here -->
-          {% load hitcount_tags %}
-          {% for article in articles %}
-            <div class="card relatative">
-              {% if user.is_authenticated and user.id == article.author.id %}
-              {% if article.status == 'crf'%}
-              <output class="absolute mt-.5 ml-.5 small p-0 px-.25 attention bg-attention bd-attention">crafted</output>
-              {% else %}
-              <output class="absolute mt-.5 ml-.5 small p-0 px-.25 success bg-success bd-success">published</output>
-              {% endif %}
-              {% endif %}
-              {% if article.img %}
-              <img src="{{ article.img.url }}" alt="Article Image" />
-              {% endif %}
-              <div class="card-content">
-                <a href="{{ article.get_absolute_url }}">
-                  <div class="card-title bold underline">{{ article.title }}</div>
-                  <div class="card-text normal">{{ article.description|truncatewords:10 }}</div>
-                </a>
-                <div class="author flex space-between">
-                  <div class="flex align-center space-between">
-                    {% if article.author.img %}
-                      <img src="{{ article.author.img.url }}" alt="Author Image" />
-                    {% else %}
-                      <img src="{% static 'images/images.png' %}" alt="Author Image" />
-                    {% endif %}
-                    <div class="author-name">{{ article.author.username }}</div>
-                  </div>
-                  {% if user.is_authenticated and user.id == article.author.id %}
-                  <div>
-                    <button class="accent">
-                      <a href="{% url 'update_article' article.pk article.slug %}" class=""><i class="fa-regular fa-pen-to-square"></i></a>
-                    </button>
-                      <button class="danger">
-                        <a href="{% url 'article_delete' article.id %}">
-                          <i class="fa-regular fa-trash-can"></i>
-                        </a>
-                      </button>
-                  </div>
-                  {% endif %}
-
-                </div>
-              </div>
-              <div class="card-footer small">
-                <span class=""><i class="fa-regular fa-clock mr-.5"></i>{{ article.date_created.date }}</span>
-                <span>
-                  <span class="views mr-.5">
-                      <i class="fa-solid fa-eye default"></i> 
-                     {% get_hit_count for article %}</span>
-                  <span class="upvotes">
-                     {% if user in article.upvotes.all %}
-                     <i class="fa-regular fa-thumbs-up success"></i> 
-                     {% else %}
-                     <i class="fa-regular fa-thumbs-up"></i> 
-                     {% endif %}
-                     {{ article.number_of_upvotes }}</span>
-             </span>
-              </div>
+<section id="article-list" class="">
+    <main>
+        <h2>دستاورد ها</h2>
+        <div id="user_achivment">
+            <div class="achive_card">
+                gold
             </div>
-          {% endfor %}
-          <!-- Repeat for more articles -->
+            <div class="achive_card">
+                gold
+            </div>
+            <div class="achive_card">
+                gold
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-{% endblock %}
+        <div>
+            {% for article in articles %}
+            <a href="{% url 'article_detail' article.id article.slug %}">
+                <div class="card">
+                    {% if article.img %}
+                    <img src="{{ article.img.url }}" alt="{{article.title}}" class="card-image">
+                    {% endif %}
+                    <div class="card-content">
+                        <div class="card-title">
+                            <h2 class="">{{ article.title }}</h2>
+                            {% if user.id == author_id %}
+                            <span class="craft">{{ article.status }}</span>
+                            <a href="{% url 'update_article' article.id article.slug %}">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                            <a href="{% url 'article_delete' article.id%}">
+                             <i class="fa-solid fa-trash"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                        <p class="card-description">{{ article.description|truncatewords:30}}</p>
+                        <div class="card-author">
+                            <div class="card-author">
+                                {% if article.author.img %}
+                                <img src="{{ article.author.img.url }}" alt="تصویر نویسنده" class="author-image">
+                                {% endif %}
+                                <div class="author-info">
+                                    <p class="author-name">{{ article.author.username}}</p>
+                                    <p class="publish-date">{{ article.date_last_modified }}</p>
+                                </div>
+                            </div>
+                            <div class="card-author">
+                                <div class="card-item-link">
+                                    {% get_hit_count for article %}
+                                    <a href="" class=""><i class="fa-solid fa-eye"></i>
+                                    </a>
+                                </div>
+                                <div class="card-item-link">
+                                    {{ article.number_of_upvotes }}
+                                    <a href="" class="upvote"><i class="fa-solid fa-arrow-up"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </main>
+    <aside id="user_info">
+      {% if user_profile.user.img %}
+      <img class="user_img_profile" src="{{ user_profile.user.img.url }}" alt="user_avatar">
+      {% endif %}
+        <div class="user_names">
+            <span>{{ user_profile.user.username}}</span>
+            <h2>
+              {{ user_profile.user.first_name }}
+              {{ user_profile.user.last_name }}
+            </h2>
+        </div>
+        <div class="user_career">
+            <h5>{{ user_profile.profession }}</h5>
+            <h5>{{ user_profile.major }}</h5>
+            <p class="user_bio">
+                {{ user_profile.bio }}
+            </p>
+        </div>
+        <ul class="user_contact">
+            <li>{{ user_profile.user.email }}</li>
+            <li>09940449544</li>
+            <li class="user_social">
+                <a href="">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+            </li>
+        </ul>
 
+    </aside>
+
+</section>
+{% endblock content %}

@@ -6,13 +6,14 @@ from django.views.generic import ListView , CreateView , UpdateView , DeleteView
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+
 from hitcount.views import HitCountDetailView
 from .forms import ArticleCreationForm
 from .models import Article
-
+from profiles.models import UserProfile
 
 # Create your views here.
-class ArticleDetailView(HitCountDetailView , DetailView):
+class ArticleDetailView(LoginRequiredMixin , HitCountDetailView , DetailView):
     model = Article
     template_name = 'articles/article_detail.html'
     context_object_name = 'article'
@@ -21,16 +22,19 @@ class ArticleDetailView(HitCountDetailView , DetailView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-
         upvotes_connected = get_object_or_404(Article, id=self.kwargs['id'])
+        author_articles = get_object_or_404(Article , author=upvotes_connected.author , status="pub")
         upvoted = False
         if upvotes_connected.upvotes.filter(id=self.request.user.id).exists():
             upvoted = True
+        ctx['author_articles'] = author_articles
+        print(author_articles)
+        print(upvotes_connected)
         ctx['number_of_upvotes'] = upvotes_connected.number_of_upvotes()
         ctx['article_is_upvoted'] = upvoted
         return ctx
 
-class ArticlesListView(ListView):
+class ArticlesListView(LoginRequiredMixin , ListView):
     model = Article
     context_object_name = 'articles'
     template_name = 'articles/article_list.html'
@@ -39,7 +43,7 @@ class ArticlesListView(ListView):
         return Article.objects.filter(status = 'pub')
 
 
-class ArticleCreateView(LoginRequiredMixin , CreateView):
+class ArticleCreateView(CreateView):
     model = Article
     form_class = ArticleCreationForm
     template_name = 'articles/article_create.html'
@@ -52,7 +56,7 @@ class ArticleCreateView(LoginRequiredMixin , CreateView):
         return super().form_valid(form)
     
 
-class ArticleUpdateView(UpdateView):
+class ArticleUpdateView(LoginRequiredMixin , UpdateView):
     model = Article
     fields = [
         'title' , 'img' , 'description' , 'status', 'body'
@@ -70,7 +74,7 @@ class ArticleUpdateView(UpdateView):
             raise PermissionDenied()
         return obj
 
-class ArticleDeleteView(DeleteView):
+class ArticleDeleteView(LoginRequiredMixin , DeleteView):
     model = Article
     success_url = reverse_lazy('home')
     pk_url_kwarg = 'id'
@@ -79,7 +83,7 @@ class ArticleDeleteView(DeleteView):
 
     def get_object(self, queryset=None):
         """
-        Check the logged in user is the owner of the object or 404
+        Check the logged in user is the owner of the object or 403
         """
         obj = super(ArticleDeleteView, self).get_object(queryset)
         if obj.author != self.request.user:

@@ -7,23 +7,35 @@ const imageInput = document.getElementById('id_img');
 const selectElement = document.getElementById('id_status');
 const tagsInput = document.getElementById('id_tags');
 const tagsContainer = document.getElementById('tagsContainer');
+const regex = /<Tag:\s([^>]+)>/g;
 
 let tags = [];
 
+document.addEventListener('DOMContentLoaded', domOnLoad)
 imageInput.addEventListener('change', updateImagePreview);
-
-// Listen for open click
 openModalBtn.addEventListener('click', openModal);
-// Listen for close click
 closeBtn.addEventListener('click', closeModal);
-// Listen for outside click
 window.addEventListener('click', outsideClick);
-// Listen for form submission
 modalForm.addEventListener('submit', submitForm);
 
 selectElement.addEventListener('change', changeStatus);
 tagsInput.addEventListener('keypress', handleTagsInput);
 
+function domOnLoad() {
+    if (tagsInput.value) {
+        let match;
+        let local_tag = [];
+        // Iterate through all matches
+        while ((match = regex.exec(tagsInput.value)) !== null) {
+            local_tag.push(match[1]);
+        }
+        local_tag.forEach((tagText) => {
+            addTag(tagText);
+            tagsInput.value = '';
+
+        })
+    }
+}
 // Function to open modal
 function openModal() {
     modal.style.display = 'block';
@@ -44,6 +56,9 @@ function outsideClick(e) {
 // Function to handle form submission
 function submitForm(e) {
     tagsInput.value = tags.join(',');
+    if (tags.length == 1){
+        tagsInput.value += ",";
+    }
     closeModal();
 }
 

@@ -11,7 +11,7 @@ from django.utils.encoding import uri_to_iri
 from hitcount.views import HitCountDetailView
 from taggit.models import Tag
 
-from .forms import ArticleCreationForm
+from .forms import ArticleCreationForm , ArticleUpdateForm
 from .models import Article
 from profiles.models import UserProfile
 
@@ -65,9 +65,7 @@ class ArticleCreateView(CreateView):
 
 class ArticleUpdateView(LoginRequiredMixin , UpdateView):
     model = Article
-    fields = [
-        'title' , 'img' , 'description' , 'status', 'body'
-    ]
+    form_class = ArticleUpdateForm
     pk_url_kwarg = 'id'
     success_url = reverse_lazy('home')
     template_name = 'articles/article_update.html'

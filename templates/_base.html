@@ -15,10 +15,8 @@
     <!-- and it's easy to individually load additional languages -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
 
-    <script>
-      hljs.highlightAll()
-    </script>
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <script src="{% static "js/app.js" %}" defer></script>
     <title>
       {% block title %}
       {% endblock %}
@@ -58,6 +56,7 @@
     <footer>
       <p>تهیه شده با تلاش و راهنمایی بسیار :)</p>
     </footer>
+    <button id="toggleScrollBtn" class="scroll-btn">▼</button>
   </body>
   {% block script_end %}
   {% endblock %}

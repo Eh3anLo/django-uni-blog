@@ -1,15 +1,20 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // Select all <code> elements with the class 'code'
-    const codeElements = document.querySelectorAll('code.code');
+const toggleScrollBtn = document.getElementById('toggleScrollBtn');
 
-    codeElements.forEach(codeElement => {
-        // Create a new <pre> element
-        const preElement = document.createElement('pre');
-
-        // Append the <code> element to the new <pre> element
-        preElement.appendChild(codeElement.cloneNode(true));
-
-        // Replace the old <code> element with the new <pre> element in the DOM
-        codeElement.parentNode.replaceChild(preElement, codeElement);
-    });
+toggleScrollBtn.addEventListener('click', () => {
+  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    toggleScrollBtn.innerHTML = '▼';
+  } else {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    toggleScrollBtn.innerHTML = '▲';
+  }
 });
+
+window.addEventListener('scroll', () => {
+  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+    toggleScrollBtn.innerHTML = '▲';
+  } else {
+    toggleScrollBtn.innerHTML = '▼';
+  }
+});
+

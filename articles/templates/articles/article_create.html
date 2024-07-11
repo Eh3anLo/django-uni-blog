@@ -1,10 +1,25 @@
 {% extends '_base.html' %}
 {% load static %}
 {% block title %}
-  article create
-{% endblock %}
+نوشتن مقاله جدید{% endblock %}
 {% block script_start %}
   <script src="{% static 'js/create.js' %}" defer></script>
+{% endblock %}
+{% block nav_list %}
+<li class="btn-menu bg-light-blue">
+  <form action="{% url "signout" %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="خروج" style="background: none;border: none;cursor: pointer;">
+  </form>
+</li>
+  <li>
+    <div class="user-profile-link">
+      <a href="{% url 'user_profile' user.username %}">{{ user.username }}</a>
+      {% if user.img %}
+        <img class="user-pic" src="{{ user.img.url }}" alt="user-avatar" />
+      {% endif %}
+    </div>
+  </li>
 {% endblock %}
 {% block content %}
   {% load editorjs %}

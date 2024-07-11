@@ -24,6 +24,30 @@ html {
 /* body{
         background-color: var(--smoky) !important;
     } */
+.scroll-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--cobalt);
+    color: var(--snow);
+    font-size: 15px;
+    padding-top: 2px;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+
+.scroll-btn:hover {
+    background-color: var(--smoky);
+}
+
 a {
     text-decoration: none;
     color: #131200;
@@ -623,9 +647,10 @@ footer {
 }
 
 /* Code blocks */
-code{
+code {
     direction: ltr;
 }
+
 .article-content code {
     background-color: #f4f4f4;
     padding: 2px 4px;
@@ -895,9 +920,17 @@ textarea {
 }
 
 .form-submition {
-    width: auto !important;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 200px !important;
     margin: 0 !important;
     margin-top: 1rem !important;
+}
+#openModalBtn{
+    position: fixed;
+    bottom: -5px;
+    left: 30px;
 }
 
 .article-container form select {
@@ -958,12 +991,14 @@ textarea {
     color: #fff;
     font-size: 1rem;
 }
-.article-container form .tiny-setting .tags-hint{
+
+.article-container form .tiny-setting .tags-hint {
     font-size: .8rem;
     margin-top: 1rem;
     text-align: right;
 }
-.article-container form #id_tags::placeholder{
+
+.article-container form #id_tags::placeholder {
     color: var(--snow);
 }
 
@@ -982,7 +1017,7 @@ textarea {
     margin: 5px;
     display: flex;
     align-items: center;
-    
+
 }
 
 .article-container form .tag .close-tag {
@@ -990,3 +1025,27 @@ textarea {
     cursor: pointer;
     font-weight: bold;
 }
+
+/* Error list container */
+.errorlist {
+    list-style-type: none; /* Remove default bullet points */
+    padding: 10px; /* Add padding */
+    margin: 10px 0; /* Add margin */
+    font-family: Arial, sans-serif; /* Font style */
+    font-size: 14px; /* Font size */
+    background-color: #ffebee; /* Light red background */
+    border-radius: 5px; /* Rounded corners */
+    color: #d32f2f; /* Dark red text */
+  }
+  
+  /* Individual error items */
+  .errorlist li {
+    margin-bottom: 5px; /* Space between error messages */
+  }
+  
+  /* Adding an icon before each error message */
+  .errorlist li:before {
+    content: "⚠️"; /* Warning icon */
+    margin-right: 5px; /* Space between icon and text */
+  }
+  

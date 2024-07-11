@@ -40,9 +40,12 @@
           <h2>تنظیمات مقاله</h2>
           <div class="model-content-holder">
             <div class="image-holder">
-              {{ form.instance.img.url.clear }}
               {{ form.img }}
+              {% if form.instance.img %}
               <img id="imagePreview" src="{{ form.instance.img.url }}" alt="" />
+              {% else %}
+              <img id="imagePreview" src="" alt="" />
+              {% endif %}
               {{ form.description }}
             </div>
             <div class="tiny-setting">

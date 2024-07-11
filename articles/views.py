@@ -1,3 +1,5 @@
+from django.db.models.base import Model as Model
+from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect , HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.core.exceptions import PermissionDenied
@@ -20,7 +22,6 @@ class ArticleDetailView(LoginRequiredMixin , HitCountDetailView , DetailView):
     model = Article
     template_name = 'articles/article_detail.html'
     context_object_name = 'article'
-    pk_url_kwarg = 'id' # select using pk (if not set , select using slug)
     count_hit = True
 
     def get_context_data(self, **kwargs):
@@ -36,6 +37,10 @@ class ArticleDetailView(LoginRequiredMixin , HitCountDetailView , DetailView):
         ctx['number_of_upvotes'] = upvotes_connected.number_of_upvotes()
         ctx['article_is_upvoted'] = upvoted
         return ctx
+    
+    def get_object(self):
+        return get_object_or_404(Article, id = self.kwargs['id'] , slug=self.kwargs['slug'])
+
 
 class ArticlesListView(LoginRequiredMixin , ListView):
     model = Article
@@ -84,7 +89,7 @@ class ArticleDeleteView(LoginRequiredMixin , DeleteView):
     success_url = reverse_lazy('home')
     pk_url_kwarg = 'id'
     context_object_name = 'article'
-    template_name = "articles/article_delete.html"
+    template_name = "articles/article_list.html"
 
     def get_object(self, queryset=None):
         """

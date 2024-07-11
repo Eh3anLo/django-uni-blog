@@ -8,7 +8,7 @@
   <main class="article-list">
     <div class="card relatative width">
       {% if user.is_authenticated and user.id == article.author.id %}
-        {% if article.status == 'crf' %}
+        {% if article.status == 'پیش نویس' %}
           <output class="absolute mt-.5 ml-.5 small p-0 px-.25 attention bg-attention bd-attention">crafted</output>
         {% else %}
           <output class="absolute mt-.5 ml-.5 small p-0 px-.25 success bg-success bd-success">published</output>

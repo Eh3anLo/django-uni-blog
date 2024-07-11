@@ -24,6 +24,12 @@ class ArticleCreationForm(forms.ModelForm):
 
     def set_author(self , user):
         Article.author = user
+            
+    def __init__(self, *args, **kwargs):
+        super(ArticleCreationForm, self).__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            field.error_messages = {'required':f' فیلد ({field.label})  الزامی ست.'}
 
 class ArticleUpdateForm(forms.ModelForm):
     class Meta:

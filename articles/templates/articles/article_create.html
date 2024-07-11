@@ -24,6 +24,7 @@
 {% block content %}
   {% load editorjs %}
   <div class="article-container">
+    {{ form.errors }}
     <form enctype="multipart/form-data" action="" method="POST" id="modalForm">
       {% csrf_token %}
       {{ form.title }}

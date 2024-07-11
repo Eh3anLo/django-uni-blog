@@ -88,8 +88,6 @@ class ArticleDeleteView(LoginRequiredMixin , DeleteView):
     model = Article
     success_url = reverse_lazy('home')
     pk_url_kwarg = 'id'
-    context_object_name = 'article'
-    template_name = "articles/article_list.html"
 
     def get_object(self, queryset=None):
         """
@@ -101,7 +99,7 @@ class ArticleDeleteView(LoginRequiredMixin , DeleteView):
         return obj
     
 def article_upvotes_view(request , id , slug):    
-    article = get_object_or_404(Article, pk=id )
+    article = get_object_or_404(Article, pk=id , slug=slug)
     if article.upvotes.filter(id=request.user.id).exists():
         article.upvotes.remove(request.user.id)
     else:

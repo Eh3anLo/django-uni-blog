@@ -927,7 +927,8 @@ textarea {
     margin: 0 !important;
     margin-top: 1rem !important;
 }
-#openModalBtn{
+
+.article-container form>#openModalBtn {
     position: fixed;
     bottom: -5px;
     left: 30px;
@@ -1028,24 +1029,55 @@ textarea {
 
 /* Error list container */
 .errorlist {
-    list-style-type: none; /* Remove default bullet points */
-    padding: 10px; /* Add padding */
-    margin: 10px 0; /* Add margin */
-    font-family: Arial, sans-serif; /* Font style */
-    font-size: 14px; /* Font size */
-    background-color: #ffebee; /* Light red background */
-    border-radius: 5px; /* Rounded corners */
-    color: #d32f2f; /* Dark red text */
-  }
-  
-  /* Individual error items */
-  .errorlist li {
-    margin-bottom: 5px; /* Space between error messages */
-  }
-  
-  /* Adding an icon before each error message */
-  .errorlist li:before {
-    content: "⚠️"; /* Warning icon */
-    margin-right: 5px; /* Space between icon and text */
-  }
-  
+    list-style-type: none;
+    /* Remove default bullet points */
+    padding: 10px;
+    /* Add padding */
+    margin: 10px 0;
+    /* Add margin */
+    font-family: Arial, sans-serif;
+    /* Font style */
+    font-size: 14px;
+    /* Font size */
+    background-color: #ffebee;
+    /* Light red background */
+    border-radius: 5px;
+    /* Rounded corners */
+    color: #d32f2f;
+    /* Dark red text */
+}
+
+/* Individual error items */
+.errorlist li {
+    margin-bottom: 5px;
+    /* Space between error messages */
+}
+
+/* Adding an icon before each error message */
+.errorlist li:before {
+    content: "⚠️";
+    /* Warning icon */
+    margin-right: 5px;
+    /* Space between icon and text */
+}
+
+.btn-deleting {
+    background-color: var(--cobalt);
+    padding: .5rem;
+    border-radius: 10px;
+    width: 100px !important;
+    font-size: 1.1rem;
+    color: var(--snow);
+    cursor: pointer;
+    transition: filter .2s ease;
+}
+
+.btn-deleting:hover {
+    filter: brightness(1.1);
+}
+
+.bg-danger {
+    background-color: rgb(193, 0, 0) !important;
+    border-color: rgb(98, 0, 0);
+    border-color: rgb(98, 0, 0);
+}

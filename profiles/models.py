@@ -5,9 +5,9 @@ from django.db.models.signals import post_save
 # Create your models here.
 class UserProfile(models.Model):
     UNI_MAJOR_LEVEL = {
-        'CS1' : "Computer Associate degree",
-        'CS2' : "Computer Bachelor's degree",
-        'N1' : "Network Associate degree",
+        'کاردانی' : "کاردانی نرم افزار",
+        'کارشناسی' : "کارشناسی نرم افزار",
+        'شبکه' : "شبکه و سخت و افزار",
     }
     user = models.OneToOneField(CustomUser , on_delete=models.CASCADE)
     bio = models.TextField(blank=True , null=True)

@@ -59,8 +59,10 @@
         <div class="user_names">
             <span>{{ article.author.username}}</span>
             <h2>
-              {{ article.author.first_name }}
-              {{ article.author.last_name }}
+              <a href="{% url 'user_profile' article.author.username%}">
+                {{ article.author.first_name }}
+                {{ article.author.last_name }}
+              </a>
             </h2>
         </div>
         <div class="related-articles">
@@ -68,29 +70,25 @@
           <ul>
             {% if author_articles.count > 1 %}
             {% for a_articke in author_articles %}
-            <li>
-              <a href="{{ a_articke.get_absolute_url }}">{{ a_articke.title }}۳</a>
+            <li class="other-article">
+              <a href="{{ a_articke.get_absolute_url }}">{{ a_articke.title }}</a>
             </li>
             {% endfor %}
             {% else %}
-            <li>
-              <a href="{{ author_articles.get_absolute_url }} ">{{ author_articles.title }}۳</a>
+            <li class="other-article">
+              <a href="{{ author_articles.get_absolute_url }} ">{{ author_articles.title }}</a>
             </li>
             {% endif %}
           </ul>
         </div>
         <div class="tags">
           <h3>برچسب‌ها</h3>
-          <ul>
+          <ul class="tag-detail">
+            {% for tag in article.tags.all %}
             <li>
-              <a href="#">برچسب ۱</a>
+              <a href="{% url 'articles_by_tag' tag.slug %}" class="tag">#{{ tag.name }}</a>
             </li>
-            <li>
-              <a href="#">برچسب ۲</a>
-            </li>
-            <li>
-              <a href="#">برچسب ۳</a>
-            </li>
+         {% endfor %}
           </ul>
         </div>
     </aside>

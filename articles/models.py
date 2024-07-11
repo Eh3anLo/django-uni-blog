@@ -2,19 +2,20 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.contenttypes.fields import GenericRelation 
 from django.utils.text import slugify
+from django.utils.translation import gettext_lazy as _
 from django.utils.encoding import uri_to_iri
 
 # import uuid
 from django_editorjs_fields import EditorJsJSONField
 from hitcount.models import HitCountMixin, HitCount
-
+from taggit.managers import TaggableManager
 from accounts.models import CustomUser
 # Create your models here.
 
 class Article(models.Model):
     status_choices = {
-        'pub' : 'published',
-        'crf' : 'crafted'
+        'منتشر شده' : 'منتشر شده',
+        'پیش نویس' : 'پیش نویس'
     }
     # id = models.UUIDField(default=uuid.uuid4, unique=True,primary_key=True, editable=False)
     title = models.CharField(max_length=100 , db_collation='utf8_persian_ci')
@@ -29,6 +30,7 @@ class Article(models.Model):
     views = GenericRelation(HitCount, object_id_field='object_pk',
      related_query_name='hit_count_generic_relation')
     upvotes = models.ManyToManyField(CustomUser , related_name="upvotes" , blank=True)
+    tags = TaggableManager(_("Tags"))
 
     def __str__(self):
         return self.title

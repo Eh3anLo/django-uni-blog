@@ -1,15 +1,42 @@
 {% extends '_base.html' %}
-
+{% load static %}
 {% block title %}
-article create
-{% endblock title %}
-
-{% block  content %}
-{% load editorjs %}
-<form enctype="multipart/form-data" action="" method="POST">
-    {% csrf_token %}
-    {{ form.as_p}}
-    {{ form.media}}
-<button type='submit'>publish</button>
-</form>
-{% endblock  %}
+  article create
+{% endblock %}
+{% block script_start %}
+  <script src="{% static 'js/create.js' %}" defer></script>
+{% endblock %}
+{% block content %}
+  {% load editorjs %}
+  <div class="article-container">
+    <form enctype="multipart/form-data" action="" method="POST" id="modalForm">
+      {% csrf_token %}
+      {{ form.title }}
+      {{ form.body }}
+      {{ form.media }}
+      <div id="modal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn">&times;</span>
+          <h2>تنظیمات مقاله</h2>
+          <div class="model-content-holder">
+            <div class="image-holder">
+              {{ form.img }}
+              <img id="imagePreview" src="{% static "images/image-pre.png" %}" alt=""/>
+              {{ form.description }}
+            </div>
+            <div class="tiny-setting">
+              {{ form.status }}
+              <span class="tags-hint">{{ form.tags.help_text }}</span>
+              <div id="tagsInputContainer">
+                  {{ form.tags }}
+            </div>
+            <div id="tagsContainer"></div>
+              <button type="submit" class="btn-create form-submition">ثبت</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <input type="button" id="openModalBtn" value="تکمیل مقاله" class="btn-create" />
+    </form>
+  </div>
+{% endblock %}

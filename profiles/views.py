@@ -9,5 +9,6 @@ def user_profile_view(request , username):
     if author:
         if request.user.id == author.id:
             user_articles = Article.objects.filter(author = author)
-        user_articles = Article.objects.filter(author = author , status='pub')
+        else:
+            user_articles = Article.objects.filter(author = author , status='منتشر شده')
     return render(request , 'profiles/profile.html' , {"user_profile" : user_profile , "articles" : user_articles , 'author_id' : author.id})

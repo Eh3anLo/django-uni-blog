@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # installed package
     'django_editorjs_fields',
     'hitcount',
+    'taggit',
     # local
     'accounts',
     'profiles',
@@ -153,3 +154,8 @@ EMAIL_HOST_USER = 'ehsunlotfy@gmail.com'
 EMAIL_HOST_PASSWORD = 'bzbu stsp habs mmbe'
 
 
+# LANGUAGE_CODE = 'fa'
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
+# TIME_ZONE = 'Asia/Tehran'

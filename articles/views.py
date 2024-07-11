@@ -5,9 +5,12 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView , CreateView , UpdateView , DeleteView , DetailView
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.encoding import uri_to_iri
 
 
 from hitcount.views import HitCountDetailView
+from taggit.models import Tag
+
 from .forms import ArticleCreationForm
 from .models import Article
 from profiles.models import UserProfile
@@ -23,7 +26,7 @@ class ArticleDetailView(LoginRequiredMixin , HitCountDetailView , DetailView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         upvotes_connected = get_object_or_404(Article, id=self.kwargs['id'])
-        author_articles = get_object_or_404(Article , author=upvotes_connected.author , status="pub")
+        author_articles = Article.objects.filter(author=upvotes_connected.author , status="منتشر شده")
         upvoted = False
         if upvotes_connected.upvotes.filter(id=self.request.user.id).exists():
             upvoted = True
@@ -40,8 +43,12 @@ class ArticlesListView(LoginRequiredMixin , ListView):
     template_name = 'articles/article_list.html'
 
     def get_queryset(self):
-        return Article.objects.filter(status = 'pub')
+        return Article.objects.filter(status = 'منتشر شده')
 
+def articles_by_tag(request, slug):
+    tag = get_object_or_404(Tag, slug=uri_to_iri(slug))
+    articles = Article.objects.filter(tags=tag)
+    return render(request, 'articles/article_list.html', {'tag': tag, 'articles': articles})
 
 class ArticleCreateView(CreateView):
     model = Article

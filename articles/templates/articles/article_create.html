@@ -1,17 +1,18 @@
 {% extends '_base.html' %}
 {% load static %}
 {% block title %}
-نوشتن مقاله جدید{% endblock %}
+  نوشتن مقاله جدید
+{% endblock %}
 {% block script_start %}
   <script src="{% static 'js/create.js' %}" defer></script>
 {% endblock %}
 {% block nav_list %}
-<li class="btn-menu bg-light-blue">
-  <form action="{% url "signout" %}" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="خروج" style="background: none;border: none;cursor: pointer;">
-  </form>
-</li>
+  <li class="btn-menu bg-light-blue">
+    <form action="{% url 'signout' %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" value="خروج" style="background: none;border: none;cursor: pointer;" />
+    </form>
+  </li>
   <li>
     <div class="user-profile-link">
       <a href="{% url 'user_profile' user.username %}">{{ user.username }}</a>
@@ -23,6 +24,14 @@
 {% endblock %}
 {% block content %}
   {% load editorjs %}
+  <div id="message">
+    <div class="rectangle" id="successMsg">
+      <div class="notification-text">
+        <i class="fas fa-exclamation-circle" style="font-size: 20px">&nbsp;&nbsp;</i>
+        <span>&nbsp;&nbsp;اطلاعات با موفقیت ارسال شد.</span>
+      </div>
+    </div>
+  </div>
   <div class="article-container">
     {{ form.errors }}
     <form enctype="multipart/form-data" action="" method="POST" id="modalForm">
@@ -37,16 +46,14 @@
           <div class="model-content-holder">
             <div class="image-holder">
               {{ form.img }}
-              <img id="imagePreview" src="{% static "images/image-pre.png" %}" alt=""/>
+              <img id="imagePreview" src="{% static 'images/image-pre.png' %}" alt="" />
               {{ form.description }}
             </div>
             <div class="tiny-setting">
               {{ form.status }}
               <span class="tags-hint">{{ form.tags.help_text }}</span>
-              <div id="tagsInputContainer">
-                  {{ form.tags }}
-            </div>
-            <div id="tagsContainer"></div>
+              <div id="tagsInputContainer">{{ form.tags }}</div>
+              <div id="tagsContainer"></div>
               <button type="submit" class="btn-create form-submition">ثبت</button>
             </div>
           </div>

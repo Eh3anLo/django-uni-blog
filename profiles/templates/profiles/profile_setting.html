@@ -1,0 +1,77 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block nav_list %}
+<li class="btn-menu bg-light-blue">
+  <form action="{% url "signout" %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="خروج" style="background: none;border: none;cursor: pointer;">
+  </form>
+</li>
+  <li class="btn-menu">
+    <a href="{% url 'create_article' %}">نوشتن <i class="fa-regular fa-pen-to-square"></i></a>
+  </li>
+  <li>
+    <div class="user-profile-link">
+      <a href="{% url 'user_profile' user.username %}">{{ user.username }}</a>
+      {% if user.img %}
+        <img class="user-pic" src="{{ user.img.url }}" alt="user-avatar" />
+      {% endif %}
+    </div>
+  </li>
+{% endblock %}
+
+{% block content %}
+  <div id="profile-setting-container" class="article-container">
+    {{ user_form.errors }}
+    {{ profile_form.errors }}
+    <form enctype="multipart/form-data" action="" method="POST" id="profile_edit_form">
+      {% csrf_token %}
+      <div class="title form-section">
+        <b>ویرایش پروفایل</b>
+        <span></span>
+      </div>   
+      <div class="image-holder">
+        {{ user_form.img }}
+        {% if user_form.instance.img %}
+          <img id="imagePreview" src="{{ user_form.instance.img.url }}" alt="" />
+        {% endif %}
+      </div>
+      <div class="user-holder">
+        {{ user_form.username }}
+        <div>{{ user_form.first_name }}
+          {{ user_form.last_name }}</div>
+      </div>
+      <div class="title form-section">
+        <b>تحصیل | شغل</b>
+        <span></span>
+      </div>   
+      <span class="career">
+        {{ profile_form.major }}
+        {{ profile_form.profession }}
+      </span>
+      <div class="title form-section">
+        <b>{{profile_form.bio.label}}</b>
+        <span></span>
+      </div>      
+      {{ profile_form.bio }}
+      <div class="title form-section">
+        <b>ارتباطات</b>
+        <span></span>
+      </div>    
+      <span>
+        <i class="fa-solid fa-at ml-1"></i>
+        {{ user_form.email }}
+      </span>
+      <span>
+        <i class="fa-brands fa-github ml-1"></i>
+        {{ profile_form.github_url }}
+      </span>
+      <span>
+        <i class="fa-brands fa-linkedin ml-1"></i>
+        {{ profile_form.linkedin_url }}
+      </span>
+      <input type="submit" id="openModalBtn" value="ویرایش اطلاعات" class="btn-create" />
+    </form>
+  </div>
+{% endblock %}

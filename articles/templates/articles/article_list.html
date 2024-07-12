@@ -61,7 +61,11 @@
                     {% get_hit_count for article %}
                     <i class="fa-solid fa-eye"></i>
                   </div>
+                  {% if user in article.upvotes.all %}
+                  <div class="card-item-link bg-green">
+                  {% else %}
                   <div class="card-item-link">
+                  {% endif %}
                     {{ article.number_of_upvotes }}
                     <i class="fa-solid fa-arrow-up"></i>
                   </div>

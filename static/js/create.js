@@ -25,10 +25,14 @@ function domOnLoad() {
     if (tagsInput.value) {
         let match;
         let local_tag = [];
-        // Iterate through all matches
-        while ((match = regex.exec(tagsInput.value)) !== null) {
-            local_tag.push(match[1]);
+        if (tagsInput.value.includes('Tag')) {
+            while ((match = regex.exec(tagsInput.value)) !== null) {
+                local_tag.push(match[1]);
+            }
+        } else {
+            local_tag = tagsInput.value.split(',')
         }
+        // Iterate through all matches
         local_tag.forEach((tagText) => {
             addTag(tagText);
             tagsInput.value = '';
@@ -55,10 +59,16 @@ function outsideClick(e) {
 
 // Function to handle form submission
 function submitForm(e) {
-    tagsInput.value = tags.join(',');
-    if (tags.length == 1){
+    if (tags.length == 1) {
         tagsInput.value += ",";
     }
+    if (tags.length > 5) {
+        e.preventDefault();
+        console.log('hello')
+        message('تعداد برچسب های نمیتواند بیشتر از ۵ تا باشد.', 'error');
+        return;
+    }
+    tagsInput.value = tags.join(',');
     closeModal();
 }
 
@@ -124,4 +134,19 @@ function removeTag(tagText) {
             tagElement.remove();
         }
     });
+}
+
+function message(text, state) {
+    const msg = $('#successMsg').clone(true);
+    $($($(msg).children()).children()[1]).text(text);
+    $('#message').append($(msg));
+    $(msg).toggleClass(`${state} animate__animated animate__fadeInRight`);
+    setTimeout(function () {
+        $(msg).toggleClass(`${state} animate__animated animate__fadeInRight`);
+        $(msg).toggleClass(`${state} animate__animated animate__fadeOutRight`);
+        setTimeout(function () {
+            $(msg).toggleClass(`${state} animate__animated animate__fadeOutRight`);
+            $(msg).remove();
+        }, 1000);
+    }, 2100);
 }

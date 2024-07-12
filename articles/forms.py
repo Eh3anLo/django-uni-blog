@@ -1,6 +1,6 @@
 from django import forms
 from django_editorjs_fields import EditorJsWidget
-from articles.models import Article
+from articles.models import Article , Comment
 
 class ArticleCreationForm(forms.ModelForm):
     class Meta:
@@ -30,6 +30,11 @@ class ArticleCreationForm(forms.ModelForm):
 
         for field in self.fields.values():
             field.error_messages = {'required':f' فیلد ({field.label})  الزامی ست.'}
+    def clean_tags(self):
+        tags = self.cleaned_data.get('tags')
+        if len(tags) > 5:
+            raise forms.ValidationError("You can only add up to 5 tags.")
+        return tags
 
 class ArticleUpdateForm(forms.ModelForm):
     class Meta:
@@ -55,4 +60,18 @@ class ArticleUpdateForm(forms.ModelForm):
 
         for field in self.fields.values():
             field.error_messages = {'required':f' فیلد ({field.label})  الزامی ست.'}
+
+    def clean_tags(self):
+        tags = self.cleaned_data.get('tags')
+        if len(tags) > 5:
+            raise forms.ValidationError("You can only add up to 5 tags.")
+        return tags
+    
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={'rows': 3, 'placeholder': 'افزودن کامنت ... '}),
+        }
 

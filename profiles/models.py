@@ -10,9 +10,11 @@ class UserProfile(models.Model):
         'شبکه' : "شبکه و سخت و افزار",
     }
     user = models.OneToOneField(CustomUser , on_delete=models.CASCADE)
-    bio = models.TextField(blank=True , null=True)
-    major = models.CharField(max_length=200 , choices=UNI_MAJOR_LEVEL , blank=True)
-    profession = models.CharField(max_length=200 , blank=True)
+    bio = models.TextField(verbose_name="درباره من",blank=True , null=True)
+    major = models.CharField(verbose_name="رشته تحصیلی",max_length=200 , choices=UNI_MAJOR_LEVEL , blank=True)
+    profession = models.CharField(verbose_name="سمت شغلی",max_length=200 , blank=True)
+    github_url = models.URLField((" گیت هاب"), max_length=500 , null=True , blank=True)
+    linkedin_url = models.URLField((" لینکدین"), max_length=500 , null=True , blank=True)
     # pic = models.ImageField()
 
     def __str__(self):

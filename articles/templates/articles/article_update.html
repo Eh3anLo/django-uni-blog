@@ -27,6 +27,14 @@
 {% endblock %}
 {% block content %}
   {% load editorjs %}
+  <div id="message" style="z-index: 2;">
+    <div class="rectangle" id="successMsg">
+      <div class="notification-text">
+        <i class="fas fa-exclamation-circle" style="font-size: 20px">&nbsp;&nbsp;</i>
+        <span>&nbsp;&nbsp;اطلاعات با موفقیت ارسال شد.</span>
+      </div>
+    </div>
+  </div>
   <div class="article-container">
     <form enctype="multipart/form-data" action="" method="POST" id="modalForm">
       {% csrf_token %}

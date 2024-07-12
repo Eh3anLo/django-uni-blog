@@ -10,7 +10,7 @@
 {% block nav_list %}
   {% if user.id == author_id %}
     <li class="btn-menu">
-      <a href="">تنظیمات حساب کاربری</a>
+      <a href="{% url "profile_setting"%}">تنظیمات حساب کاربری</a>
     </li>
   {% endif %}
   <li class="btn-menu">
@@ -121,11 +121,13 @@
       </div>
       <ul class="user_contact">
         <li>{{ user_profile.user.email }}</li>
-        <li>09940449544</li>
         <li class="user_social">
-          <a href=""><i class="fa-brands fa-github"></i></a>
-          <a href=""><i class="fa-brands fa-github"></i></a>
-          <a href=""><i class="fa-brands fa-github"></i></a>
+        {% if user_profile.github_url %}
+        <a href="{{user_profile.github_url}}"><i class="fa-brands fa-github"></i></a>
+        {% endif %}
+        {% if user_profile.linkedin_url %}
+        <a href="{{user_profile.linkedin_url}}"><i class="fa-brands fa-linkedin"></i></a>
+        {% endif %}
         </li>
       </ul>
     </aside>

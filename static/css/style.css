@@ -55,6 +55,9 @@ a {
 
 .bg-green {
     background-color: var(--green) !important;
+    box-shadow: 0px 0px 14px -2px var(--green);
+    padding: .2rem .4rem;
+    border-radius: 5px;
 }
 
 .bg-snow {
@@ -127,6 +130,10 @@ a {
 
 .mb-3 {
     margin-bottom: 1rem;
+}
+
+.ml-1 {
+    margin-left: 1rem;
 }
 
 .title {
@@ -320,7 +327,7 @@ footer {
     text-align: center;
     height: 80px;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     border-top: 1px solid #e2e2e2;
 }
@@ -465,11 +472,12 @@ footer {
     justify-content: space-between;
 }
 
-.author-image {
+.author-image , .comment-author-img{
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    margin-left: 10px;
+    margin-left: 10px !important;
+    display: inline-block !important;
 }
 
 .author-info {
@@ -798,7 +806,7 @@ textarea {
     border: none;
 }
 
-.article-container form .btn-create {
+.article-container form .btn-create , .btn-create {
     width: fit-content;
     font-size: 1rem;
     background: none;
@@ -949,25 +957,25 @@ textarea {
     width: 100%;
 }
 
-.article-container form select option {
+.article-container form select#id_status option {
     background: #333;
     color: #fff;
 }
 
-.article-container form select:hover,
-.article-container form select:focus {
+.article-container form select#id_status:hover,
+.article-container form select#id_status:focus {
     background: rgba(255, 255, 255, 0.3);
 }
 
-.article-container form select::-ms-expand {
+.article-container form select#id_status::-ms-expand {
     display: none;
 }
 
-.article-container form select.publish {
+.article-container form select#id_status.publish {
     background: rgb(57 198 65 / 30%);
 }
 
-.article-container form select.draft {
+.article-container form select#id_status.draft {
     background: rgba(251, 217, 47, 0.3);
 }
 
@@ -1080,4 +1088,213 @@ textarea {
     background-color: rgb(193, 0, 0) !important;
     border-color: rgb(98, 0, 0);
     border-color: rgb(98, 0, 0);
+}
+
+#like {
+    background: none;
+    border: none;
+    padding: 0.3rem 0.5rem;
+    border-radius: 10px;
+    /* color: var(--snow); */
+    cursor: pointer;
+    margin-right: 1rem;
+    transition: .2s background ease;
+}
+
+#like.success {
+    background-color: var(--green);
+    box-shadow: 0px 0px 14px -2px var(--green);
+}
+
+#like:hover {
+    background-color: #ccc;
+    box-shadow: none;
+}
+
+#profile_edit_form {
+    margin: auto;
+    padding: 20px;
+    width: fit-content;
+    text-align: right;
+}
+
+#profile_edit_form  input[type='text'],
+#profile_edit_form  input[type='file'],
+#profile_edit_form  input[type='number'],
+#profile_edit_form  input[type='url'],
+#profile_edit_form  input[type='email'],
+select#id_major {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: rgba(239, 239, 239, 0.644) !important;
+    color: var(--smoky) !important;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    outline: none;
+    cursor: text;
+    width: fit-content !important;
+    margin: .5rem 0;
+    text-align: center;
+}
+
+#profile_edit_form .image-holder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row-reverse;
+    width: fit-content;
+}
+
+#profile_edit_form img#imagePreview {
+    width: 150px !important;
+    border-radius: 50%;
+    height: 150px;
+    max-height: none;
+    margin-left: 1rem !important;
+}
+
+#profile_edit_form .user-holder>div {
+    display: flex;
+    justify-content: start;
+}
+
+#profile_edit_form .user-holder>div>input {
+    margin-left: .5rem;
+}
+
+#profile_edit_form textarea {
+    resize: none;
+    text-align: start !important;
+    font-size: 1rem;
+}
+
+#profile_edit_form .form-section {
+    margin: 1rem 0;
+
+}
+
+#profile_edit_form .form-section b {
+    background-color: white;
+    padding: 0 .5rem;
+}
+
+#profile_edit_form .career {
+    display: flex;
+    justify-content: space-between;
+}
+
+#message {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    color: white !important;
+}
+
+.rectangle {
+    direction: rtl;
+    display: none;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+    justify-content: space-between;
+    width: fit-content;
+    height: 50px;
+    transform: scale(0);
+    border-radius: 5px;
+    color: white !important;
+    opacity: 1;
+    overflow: hidden;
+    background: #4bb543;
+}
+
+.rectangle.success {
+    display: flex;
+    background: #4bb543;
+}
+
+.rectangle.error {
+    display: flex;
+    background: #B00020;
+}
+
+.rectangle.animate__animated {
+    transform: scale(1);
+}
+
+.notification-text {
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    font-family: "Vazir", sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--snow) !important;
+}
+
+.notification-text span {
+    font-weight: 300;
+    text-decoration: none;
+}
+
+/* end notifi syle */
+
+.comments {
+    margin-top: 30px;
+}
+
+.comment {
+    border-top: 1px solid #eee;
+    padding: 10px 0;
+}
+
+.comment:first-child {
+    border-top: none;
+}
+
+.comment-author {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.comment-date {
+    font-size: 0.9em;
+    color: #999;
+}
+
+.comment-content {
+    margin-top: 10px;
+}
+
+.comment-form {
+    margin-top: 20px;
+}
+
+.comment-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+}
+
+.comment-form button {
+    margin: .2rem 0 ;
+    margin-bottom: 1rem;
+    display: inline-block;
+    padding: 10px 20px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 8px 18px -9px var(--green);
+
+}
+
+.comment-form button:hover {
+    background: #218838;
 }

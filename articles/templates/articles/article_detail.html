@@ -24,7 +24,9 @@
   </li>
 {% endblock %}
 {% block content %}
+
 <section id="article-list">
+ 
     <main class="article-content">
         <h1>
             {{ article.title }}
@@ -35,7 +37,7 @@
         {% load editorjs %}
         {{ article.body | editorjs }}
         <footer class="">
-            <span class="date"><i class="fa-regular fa-clock mr-.5"></i>{{ article.date_created.date}}</span>
+            <span class="date"><i class="fa-regular fa-clock ml-1"></i>{{ article.date_created.date}}</span>
             <span>
                 <span class="views mr-.5"><i class="fa-solid fa-eye"></i> {% get_hit_count for article %}
                 </span>
@@ -51,6 +53,30 @@
                 </span>
            </span>
         </footer>
+        <div class="comments">
+          <h2>کامنت ها</h2>
+          {% for comment in comments %}
+              <div class="comment">
+                <div class="comment-author">
+                  <img src="{{ comment.author.img.url}}" alt="" class="comment-author-img">
+                  {{ comment.author.username }} 
+                </div>
+                  <div class="comment-date">{{ comment.created_at }}</div>
+                  <div class="comment-content">{{ comment.content }}</div>
+              </div>
+          {% empty %}
+              <p>کامنتی ثبت نشده است. اولین نفر باشید 👇</p>
+          {% endfor %}
+      </div>
+
+      <div class="comment-form">
+          <h2>افزودن کامنت</h2>
+          <form method="post">
+              {% csrf_token %}
+              {{ comment_form.content}}
+              <button type="submit" class="btn-create" style="position: relative; height : 100%;">ثبت</button>
+          </form>
+      </div>
     </main>
     <aside id="user_info">
       {% if article.author.img %}

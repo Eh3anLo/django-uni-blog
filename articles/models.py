@@ -30,7 +30,7 @@ class Article(models.Model):
     views = GenericRelation(HitCount, object_id_field='object_pk',
      related_query_name='hit_count_generic_relation')
     upvotes = models.ManyToManyField(CustomUser , related_name="upvotes" , blank=True)
-    tags = TaggableManager(_("Tags"))
+    tags = TaggableManager(_("Tags") , blank=True)
 
     def __str__(self):
         return self.title
@@ -48,3 +48,14 @@ class Article(models.Model):
     
     def number_of_upvotes(self):
         return self.upvotes.count()
+    
+    
+
+class Comment(models.Model):
+    article = models.ForeignKey(Article, related_name='comments', on_delete=models.CASCADE , verbose_name="نوشته")
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE ,verbose_name="نویسنده")
+    content = models.TextField(verbose_name="متن کامنت")
+    created_at = models.DateTimeField(auto_now_add=True , verbose_name="تاریخ ثبت")
+
+    def __str__(self):
+        return f'کامنت ثبت شده از {self.author} در نوشته {self.article}'

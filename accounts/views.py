@@ -7,16 +7,16 @@ from django.utils import timezone
 from django.contrib.auth import login , logout
 from django.contrib.auth.mixins import UserPassesTestMixin
 from .models import CustomUser, OTP
-from .forms import EmailForm, OTPForm , CustomUserCreationForm
+from .forms import EmailForm, OTPForm
 # Create your views here.
-class SignOutView(View):
-    def post(self, request):
-        logout(request.user)
+# class SignOutView(View):
+#     def post(self, request):
+#         logout(request.user)
 
-class SignUpView(generic.CreateView):
-    form_class = CustomUserCreationForm
-    template_name = 'registration/signup.html'
-    success_url = reverse_lazy('login')
+# class SignUpView(generic.CreateView):
+#     form_class = CustomUserCreationForm
+#     template_name = 'registration/signup.html'
+#     success_url = reverse_lazy('login')
 
 
 class SendOTPView(UserPassesTestMixin , View):
@@ -79,7 +79,7 @@ class ValidateOTPView(UserPassesTestMixin , View):
                         user.set_unusable_password()  # No password needed
                         user.save()
                         login(request, user)
-                        return redirect('user_profile' , username = user.username)
+                        return redirect('profile_setting')
                     # del request.session['email']
                     login(request, user)
                     return redirect('article_list')

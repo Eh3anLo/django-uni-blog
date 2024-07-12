@@ -154,8 +154,8 @@ EMAIL_HOST_USER = 'ehsunlotfy@gmail.com'
 EMAIL_HOST_PASSWORD = 'bzbu stsp habs mmbe'
 
 
-# LANGUAGE_CODE = 'fa'
+LANGUAGE_CODE = 'fa'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-# TIME_ZONE = 'Asia/Tehran'
+TIME_ZONE = 'Asia/Tehran'

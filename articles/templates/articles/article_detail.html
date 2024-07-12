@@ -121,7 +121,8 @@
                 type: 'GET',
                 url: '{% url "upvote_article" article.id article.slug %}',
             success: function(response){
-                $('#like_count').text(response)
+                $('#like_count').text(response.upvote)
+                console.log(response.upvote)
                 $('#like').toggleClass('success')
 
             },

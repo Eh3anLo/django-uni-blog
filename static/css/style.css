@@ -1298,3 +1298,104 @@ select#id_major {
 .comment-form button:hover {
     background: #218838;
 }
+.search-bar{
+    position: relative;
+}
+.search-bar input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+}
+.search-bar input[type="text"]:focus-visible{
+    outline: 1px solid var(--green);
+}
+.search-bar button {
+    padding: 7px 11px;
+    background: var(--green);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    top: 4px;
+    width: fit-content;
+    height: fit-content;
+    left: -17px;
+}
+.search-bar button:hover {
+    background: #0056b3;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+ .pagination span {
+    padding: 4px 17px;
+    
+    text-decoration: none;
+    border-radius: 5px;
+}
+.pagination a{
+    transition: background .2s ease , color .2s ease;
+    padding: .2rem .6rem;
+    border-radius: 50%;    border-radius: 50%;
+}
+.pagination a:hover {
+    background: #0056b3;
+    color: var(--snow);
+}
+
+.pagination .disabled {
+    background: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+.filter-menu {
+    position: relative;
+    display: inline-block;
+}
+.filter-menu button {
+    padding: 10px 20px;
+    background: white;
+    color: #888888;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .2s background ease , .2s color ease;
+}
+.filter-menu button:hover {
+    background: var(--green);
+    color: var(--snow);
+}
+.filter-content {
+    width: 110px;
+    text-align: center;
+    display: none;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+.filter-content a {
+    font-size: .9rem;
+    display: block;
+    padding: 5px 8px;
+    /* background: #007bff; */
+    /* color: white; */
+    text-decoration: none;
+    border-bottom: 1px solid #ccc;
+}
+
+.filter-content a:hover {
+    background: #00b33632;
+}
+.filter-content .active {
+    background: var(--green);
+}

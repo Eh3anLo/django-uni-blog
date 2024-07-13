@@ -158,4 +158,4 @@ EMAIL_HOST_PASSWORD = 'bzbu stsp habs mmbe'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-TIME_ZONE = 'Asia/Tehran'
+# TIME_ZONE = 'Asia/Tehran'

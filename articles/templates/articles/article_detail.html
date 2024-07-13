@@ -1,15 +1,15 @@
 {% extends '_base.html' %}
 {% load hitcount_tags %}
 {% block title %}
-{{ article.title }}
-{% endblock title %}
+  {{ article.title }}
+{% endblock %}
 {% block nav_list %}
-<li class="btn-menu bg-light-blue">
-  <form action="{% url "signout" %}" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="خروج" style="background: none;border: none;cursor: pointer;">
-  </form>
-</li>
+  <li class="btn-menu bg-light-blue">
+    <form action="{% url 'signout' %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" value="خروج" style="background: none;border: none;cursor: pointer;" />
+    </form>
+  </li>
   <li class="btn-menu">
     <a href="{% url 'create_article' %}">نوشتن <i class="fa-regular fa-pen-to-square"></i></a>
   </li>
@@ -24,141 +24,133 @@
   </li>
 {% endblock %}
 {% block content %}
-
-<section id="article-list">
- 
+  <section id="article-list">
     <main class="article-content">
-        <h1>
-            {{ article.title }}
-        </h1>
-        {% if article.img %}
-        <img src="{{ article.img.url }}" alt="">
-        {% endif %}
-        {% load editorjs %}
-        {{ article.body | editorjs }}
-        <footer class="">
-            <span class="date"><i class="fa-regular fa-clock ml-1"></i>{{ article.date_created.date}}</span>
-            <span>
-                <span class="views mr-.5"><i class="fa-solid fa-eye"></i> {% get_hit_count for article %}
-                </span>
-                <span class="upvotes">
-                    {% if article_is_upvoted %}
-                    <button id="like" class="default success">
-                    {% else %}
-                    <button id="like" class="default">
-                    {% endif %}
-                        <i class="fa-regular fa-thumbs-up"></i> 
-                    </button>
-                    <span id="like_count"> {{ number_of_upvotes }} </span>
-                </span>
-           </span>
-        </footer>
-        <div class="comments">
-          <h2>کامنت ها</h2>
-          {% for comment in comments %}
-              <div class="comment">
-                <div class="comment-author">
-                  <img src="{{ comment.author.img.url}}" alt="" class="comment-author-img">
-                  {{ comment.author.username }} 
-                </div>
-                  <div class="comment-date">{{ comment.created_at }}</div>
-                  <div class="comment-content">{{ comment.content }}</div>
-              </div>
-          {% empty %}
-              <p>کامنتی ثبت نشده است. اولین نفر باشید 👇</p>
-          {% endfor %}
+      <h1>{{ article.title }}</h1>
+      {% if article.img %}
+        <img src="{{ article.img.url }}" alt="" />
+      {% endif %}
+      {% load editorjs %}
+      {{ article.body|editorjs }}
+      <footer class="">
+        <span class="date"><i class="fa-regular fa-clock ml-1"></i>{{ article.date_created.date }}</span>
+        <div>
+          <span class="views mr-.5"><i class="fa-solid fa-eye"></i> {% get_hit_count for article %}</span>
+          <span class="upvotes">
+            {% if article_is_upvoted %}
+              <button id="like" class="default success"><i class="fa-regular fa-thumbs-up"></i></button>
+            {% else %}
+              <button id="like" class="default"><i class="fa-regular fa-thumbs-up"></i></button>
+            {% endif %}
+            <span id="like_count">{{ number_of_upvotes }}</span>
+          </span>
+        </div>
+      </footer>
+      <div class="comments">
+        <h2>کامنت ها</h2>
+        {% for comment in comments %}
+          <div class="comment">
+            <div class="comment-author">
+              <img src="{{ comment.author.img.url }}" alt="" class="comment-author-img" />
+              {{ comment.author.username }}
+            </div>
+            <div class="comment-date">{{ comment.created_at }}</div>
+            <div class="comment-content">{{ comment.content }}</div>
+          </div>
+        {% empty %}
+          <p>کامنتی ثبت نشده است. اولین نفر باشید 👇</p>
+        {% endfor %}
       </div>
 
       <div class="comment-form">
-          <h2>افزودن کامنت</h2>
-          <form method="post">
-              {% csrf_token %}
-              {{ comment_form.content}}
-              <button type="submit" class="btn-create" style="position: relative; height : 100%;">ثبت</button>
-          </form>
+        <h2>افزودن کامنت</h2>
+        <form method="post">
+          {% csrf_token %}
+          {{ comment_form.content }}
+          <button type="submit" class="btn-create" style="position: relative; height : 100%;">ثبت</button>
+        </form>
       </div>
     </main>
     <aside id="user_info">
       {% if article.author.img %}
-      <img class="user_img_profile" src="{{ article.author.img.url }}" alt="user_avatar">
+        <img class="user_img_profile" src="{{ article.author.img.url }}" alt="user_avatar" />
       {% endif %}
-        <div class="user_names">
-            <span>{{ article.author.username}}</span>
-            <h2>
-              <a href="{% url 'user_profile' article.author.username%}">
-                {{ article.author.first_name }}
-                {{ article.author.last_name }}
-              </a>
-            </h2>
-        </div>
-        <div class="related-articles">
-          <h3>مقالات دیگر این نویسنده</h3>
-          <ul>
-            {% if author_articles.count > 1 %}
+      <div class="user_names">
+        <span>{{ article.author.username }}</span>
+        <h2>
+          <a href="{% url 'user_profile' article.author.username %}">
+            {{ article.author.first_name }}
+            {{ article.author.last_name }}
+          </a>
+        </h2>
+      </div>
+      <div class="related-articles">
+        <h3>مقالات دیگر این نویسنده</h3>
+        <ul>
+          {% if author_articles.count > 1 %}
             {% for a_articke in author_articles %}
-            <li class="other-article">
-              <a href="{{ a_articke.get_absolute_url }}">{{ a_articke.title }}</a>
-            </li>
+              <li class="other-article">
+                <a href="{{ a_articke.get_absolute_url }}">{{ a_articke.title }}</a>
+              </li>
             {% endfor %}
-            {% else %}
+          {% else %}
             <li class="other-article">
               <a href="{{ author_articles.get_absolute_url }} ">{{ author_articles.title }}</a>
             </li>
-            {% endif %}
-          </ul>
-        </div>
-        <div class="tags">
-          <h3>برچسب‌ها</h3>
-          <ul class="tag-detail">
-            {% for tag in article.tags.all %}
+          {% endif %}
+        </ul>
+      </div>
+      <div class="tags">
+        <h3>برچسب‌ها</h3>
+        <ul class="tag-detail">
+          {% for tag in article.tags.all %}
             <li>
               <a href="{% url 'articles_by_tag' tag.slug %}" class="tag">#{{ tag.name }}</a>
             </li>
-         {% endfor %}
-          </ul>
-        </div>
+          {% endfor %}
+        </ul>
+      </div>
     </aside>
-</section>
-{% endblock content %}  
+  </section>
+{% endblock %}
 
 {% block script_end %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js" integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js" integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
     // Add <pre> element as parent to  all <code> element with class 'code'
-    document.addEventListener("DOMContentLoaded", function() {
-        // Select all <code> elements with the class 'code'
-        const codeElements = document.querySelectorAll('code.code');
+    document.addEventListener('DOMContentLoaded', function () {
+      // Select all <code> elements with the class 'code'
+      const codeElements = document.querySelectorAll('code.code')
     
-        codeElements.forEach(codeElement => {
-            // Create a new <pre> element
-            const preElement = document.createElement('pre');
+      codeElements.forEach((codeElement) => {
+        // Create a new <pre> element
+        const preElement = document.createElement('pre')
     
-            // Append the <code> element to the new <pre> element
-            preElement.appendChild(codeElement.cloneNode(true));
+        // Append the <code> element to the new <pre> element
+        preElement.appendChild(codeElement.cloneNode(true))
     
-            // Replace the old <code> element with the new <pre> element in the DOM
-            codeElement.parentNode.replaceChild(preElement, codeElement);
-        });
-    });    
-        $(document).on('click', '#like', function(event){
-            event.preventDefault();
-            console.log("from jquery section")
-            $.ajax({
-                type: 'GET',
-                url: '{% url "upvote_article" article.id article.slug %}',
-            success: function(response){
-                $('#like_count').text(response.upvote)
-                console.log(response.upvote)
-                $('#like').toggleClass('success')
-
-            },
-            error: function(rs, e){
-                console.log(rs.responseText);
-            },
-        });
-    });
-</script>
-<script>
-  hljs.highlightAll()
-</script>
-{% endblock script_end %}
+        // Replace the old <code> element with the new <pre> element in the DOM
+        codeElement.parentNode.replaceChild(preElement, codeElement)
+      })
+    })
+    $(document).on('click', '#like', function (event) {
+      event.preventDefault()
+      console.log('from jquery section')
+      $.ajax({
+        type: 'GET',
+        url: '{% url "upvote_article" article.id article.slug %}',
+        success: function (response) {
+          $('#like_count').text(response.upvote)
+          console.log(response.upvote)
+          $('#like').toggleClass('success')
+        },
+        error: function (rs, e) {
+          console.log(rs.responseText)
+        }
+      })
+    })
+  </script>
+  <script>
+    hljs.highlightAll()
+  </script>
+{% endblock %}

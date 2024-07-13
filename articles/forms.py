@@ -75,3 +75,5 @@ class CommentForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'rows': 3, 'placeholder': 'افزودن کامنت ... '}),
         }
 
+class ArticleSearchForm(forms.Form):
+    query = forms.CharField(label='جست و جو', max_length=100, widget=forms.TextInput(attrs={'placeholder': 'جست و جو ...'}))

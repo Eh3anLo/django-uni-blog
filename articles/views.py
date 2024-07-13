@@ -1,5 +1,5 @@
 from django.db.models.base import Model as Model
-from django.db.models.query import QuerySet
+from django.db.models import Count
 from django.http import HttpResponseRedirect , HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.core.exceptions import PermissionDenied
@@ -12,6 +12,7 @@ from django.utils.encoding import uri_to_iri
 
 
 from hitcount.views import HitCountDetailView
+from hitcount.models import Hit , HitCount
 from taggit.models import Tag
 
 from .forms import ArticleCreationForm , ArticleUpdateForm , CommentForm
@@ -24,7 +25,6 @@ class ArticleDetailView(LoginRequiredMixin ,FormMixin, HitCountDetailView , Deta
     template_name = 'articles/article_detail.html'
     context_object_name = 'article'
     form_class = CommentForm
-
     count_hit = True
 
     def get_context_data(self, **kwargs):
@@ -64,9 +64,35 @@ class ArticlesListView(LoginRequiredMixin , ListView):
     model = Article
     context_object_name = 'articles'
     template_name = 'articles/article_list.html'
+    paginate_by = 10
 
     def get_queryset(self):
-        return Article.objects.filter(status = 'منتشر شده').order_by('-date_created')
+        queryset = Article.objects.filter(status = 'منتشر شده')
+        query = self.request.GET.get('q')
+        filter_type = self.request.GET.get('filter')
+        if query:
+            queryset = queryset.filter(
+                status = 'منتشر شده',
+                title__icontains=query,
+            )
+        
+        if filter_type == 'latest':
+            queryset = queryset.order_by('-date_created')
+        elif filter_type == 'most_viewed':
+            queryset = queryset.order_by('views')
+        elif filter_type == 'trending':
+            queryset = queryset.annotate(count=Count('upvotes')).order_by('-count')
+        elif filter_type == 'liked_by_user':
+            queryset = queryset.filter(upvotes=self.request.user)
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        hits = Hit.objects.filter(user=self.request.user)
+        hit_counts = HitCount.objects.filter(hit__in=hits)
+        context['recent_articles'] = Article.objects.filter(status="منتشر شده" , views__in = hit_counts)[:5]
+        context['filter'] = self.request.GET.get('filter', '')
+        return context
 
 def articles_by_tag(request, slug):
     tag = get_object_or_404(Tag, slug=uri_to_iri(slug))

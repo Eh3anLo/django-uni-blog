@@ -1,6 +1,11 @@
 {% extends '_base.html' %}
 {% load static %}
-
+{% block title %}
+ویرایش پروفایل کاربری
+{% endblock title %}
+{% block script_start %}
+<script src="{% static 'js/profile.js' %}" defer></script>
+{% endblock script_start %}
 {% block nav_list %}
 <li class="btn-menu bg-light-blue">
   <form action="{% url "signout" %}" method="POST">

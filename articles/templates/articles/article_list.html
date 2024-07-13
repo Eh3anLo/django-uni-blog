@@ -5,6 +5,26 @@
 {% block title %}
   بلاگ
 {% endblock %}
+{% block script_start %}
+<script src="{% static "js/app.js" %}" defer ></script>
+{% endblock %}
+{% block search %}
+<div class="filter-menu">
+  <button id="filterBtn">فیلتر ها <i class="fa-solid fa-angle-down"></i></button>
+  <div id="filter-content" class="filter-content">
+      <a href="?q={{ request.GET.q }}&filter=latest" class="{% if filter == 'latest' %}active{% endif %}">تازه ترین <i class="fa-solid fa-clock-rotate-left"></i></a>
+      <a href="?q={{ request.GET.q }}&filter=most_viewed" class="{% if filter == 'most_viewed' %}active{% endif %}">پربازدید ترین <i class="fa-regular fa-eye"></i></a>
+      <a href="?q={{ request.GET.q }}&filter=liked_by_user" class="{% if filter == 'liked_by_user' %}active{% endif %}">پسندیده <i class="fa-solid fa-check-to-slot"></i></a>
+      <a href="?filter=trending" class="{% if filter == 'trending' %}active{% endif %}">ترند ترین <i class="fa-solid fa-arrow-trend-up"></i> </a>
+  </div>
+</div>
+<div class="search-bar">
+  <form method="get">
+      <input type="text" name="q" placeholder="جست و جو ..." value="{{ request.GET.q }}">
+      <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+  </form>
+</div>
+{% endblock search %}
 {% block nav_list %}
 <li class="btn-menu bg-light-blue">
   <form action="{% url "signout" %}" method="POST">
@@ -74,21 +94,46 @@
             </div>
           </div>
         </div>
+      {% empty%}
+      <p>
+        🧐  چیزی پیدا نکردیم
+      </p>
       {% endfor %}
+      {% if is_paginated %}
+      <div class="pagination">
+          <span class="step-links">
+            
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fa-solid fa-angle-right"></i></a>
+                {% comment %} <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">last &raquo;</a> {% endcomment %}
+            {% endif %}
+            <span class="current">
+              {% comment %} Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}. {% endcomment %}
+              {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}
+            </span>
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fa-solid fa-angle-left"></i></a>
+                {% comment %} <a href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&laquo; first</a> {% endcomment %}
+            {% else %}
+            {% endif %}
+
+          </span>
+      </div>
+  {% endif %}
     </main>
-    <aside>
+    <aside style="text-align: center; padding-right: 2rem;">
       <div class="related-articles">
-        <h3>مقالات مرتبط</h3>
+        <h3>خوانده شده های اخیر</h3>
         <ul>
-          <li>
-            <a href="#">عنوان مقاله مرتبط ۱</a>
+          {% for recent_article in recent_articles %}
+          <li class="other-article" style="border-right: none;">
+            <a href="{{ recent_article.get_absolute_url }}">{{ recent_article.title }}</a>
           </li>
-          <li>
-            <a href="#">عنوان مقاله مرتبط ۲</a>
+          {% empty %}
+          <li class="other-article">
+            هنوز مقاله ای رو نخوندی  😤
           </li>
-          <li>
-            <a href="#">عنوان مقاله مرتبط ۳</a>
-          </li>
+          {% endfor %}
         </ul>
       </div>
       <div class="tags">

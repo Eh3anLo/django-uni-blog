@@ -67,7 +67,7 @@ class ArticlesListView(LoginRequiredMixin , ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        queryset = Article.objects.filter(status = 'منتشر شده')
+        queryset = Article.objects.filter(status = 'منتشر شده').order_by("-date_created")
         query = self.request.GET.get('q')
         filter_type = self.request.GET.get('filter')
         if query:
@@ -77,7 +77,7 @@ class ArticlesListView(LoginRequiredMixin , ListView):
             )
         
         if filter_type == 'latest':
-            queryset = queryset.order_by('-date_created')
+            queryset = queryset.order_by('-date_last_modified')
         elif filter_type == 'most_viewed':
             queryset = queryset.order_by('views')
         elif filter_type == 'trending':
@@ -96,7 +96,7 @@ class ArticlesListView(LoginRequiredMixin , ListView):
 
 def articles_by_tag(request, slug):
     tag = get_object_or_404(Tag, slug=uri_to_iri(slug))
-    articles = Article.objects.filter(tags=tag)
+    articles = Article.objects.filter(status="منتشر شده",tags=tag)
     return render(request, 'articles/article_list.html', {'tag': tag, 'articles': articles})
 
 class ArticleCreateView(CreateView):

@@ -104,7 +104,7 @@
           <span class="step-links">
             
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fa-solid fa-angle-right"></i></a>
+                <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}"><i class="fa-solid fa-angle-right"></i></a>
                 {% comment %} <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">last &raquo;</a> {% endcomment %}
             {% endif %}
             <span class="current">
@@ -112,7 +112,7 @@
               {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}
             </span>
             {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="fa-solid fa-angle-left"></i></a>
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.filter %}&filter={{ request.GET.filter }}{% endif %}"><i class="fa-solid fa-angle-left"></i></a>
                 {% comment %} <a href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&laquo; first</a> {% endcomment %}
             {% else %}
             {% endif %}

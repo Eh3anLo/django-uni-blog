@@ -28,8 +28,8 @@ def update_user_profile(request):
         profile = UserProfile(user=user)
 
     if request.method == 'POST':
-        user_form = CustomUserUpdateForm(request.POST, instance=user)
-        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=profile)
+        user_form = CustomUserUpdateForm(request.POST, request.FILES,  instance=user)
+        profile_form = ProfileUpdateForm(request.POST,instance=profile)
         
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()

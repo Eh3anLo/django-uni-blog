@@ -29,7 +29,7 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractUser):
     age = models.PositiveIntegerField(blank=True , null=True)
     email = models.EmailField(unique=True)
-    img = models.ImageField(upload_to='media/uploads/images/2024/06' , blank=True)
+    img = models.ImageField(upload_to='uploads/profiles/' , blank=True)
 
     objects = CustomUserManager()
     USERNAME_FIELD = 'email'

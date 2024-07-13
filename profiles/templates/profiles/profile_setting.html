@@ -40,7 +40,10 @@
         {{ user_form.img }}
         {% if user_form.instance.img %}
           <img id="imagePreview" src="{{ user_form.instance.img.url }}" alt="" />
+          {% else %}
+          <img id="imagePreview" src="{% static "images/image-pre.png" %}" alt="" />
         {% endif %}
+
       </div>
       <div class="user-holder">
         {{ user_form.username }}

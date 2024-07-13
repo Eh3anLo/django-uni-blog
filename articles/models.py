@@ -20,7 +20,7 @@ class Article(models.Model):
     # id = models.UUIDField(default=uuid.uuid4, unique=True,primary_key=True, editable=False)
     title = models.CharField(max_length=100 , db_collation='utf8_persian_ci')
     description = models.TextField(blank=True,null=True)
-    img = models.ImageField(upload_to='media', null=True , blank=True)
+    img = models.ImageField(upload_to ='uploads/% Y/% m/% d/',null=True , blank=True)
     author = models.ForeignKey('accounts.CustomUser' , on_delete=models.CASCADE)
     body = EditorJsJSONField()
     date_created = models.DateTimeField(auto_now_add=True)

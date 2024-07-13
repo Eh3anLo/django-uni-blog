@@ -64,7 +64,7 @@ class ArticlesListView(LoginRequiredMixin , ListView):
     model = Article
     context_object_name = 'articles'
     template_name = 'articles/article_list.html'
-    paginate_by = 10
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = Article.objects.filter(status = 'منتشر شده')

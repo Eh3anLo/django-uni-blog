@@ -31,6 +31,9 @@ ALLOWED_HOSTS = ['127.0.0.1' ,'0.0.0.0' ,'192.168.205.50']
 # Application definition
 
 INSTALLED_APPS = [
+    "admin_interface",
+    "colorfield",
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -154,8 +157,12 @@ EMAIL_HOST_USER = 'ehsunlotfy@gmail.com'
 EMAIL_HOST_PASSWORD = 'bzbu stsp habs mmbe'
 
 
-# LANGUAGE_CODE = 'fa'
+LANGUAGE_CODE = 'fa'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 # TIME_ZONE = 'Asia/Tehran'
+
+
+X_FRAME_OPTIONS = "SAMEORIGIN"
+SILENCED_SYSTEM_CHECKS = ["security.W019"]

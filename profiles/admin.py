@@ -4,4 +4,5 @@ from .models import UserProfile
 class UserProfileAdmin(admin.StackedInline):
     model = UserProfile
     list_display = admin.ModelAdmin.list_display + ('major' , 'profession',)
+    verbose_name = "پروفایل کاربری"
     

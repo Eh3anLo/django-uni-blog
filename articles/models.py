@@ -18,20 +18,22 @@ class Article(models.Model):
         'پیش نویس' : 'پیش نویس'
     }
     # id = models.UUIDField(default=uuid.uuid4, unique=True,primary_key=True, editable=False)
-    title = models.CharField(max_length=100 , db_collation='utf8_persian_ci')
-    description = models.TextField(blank=True,null=True)
-    img = models.ImageField(upload_to ='uploads/% Y/% m/% d/',null=True , blank=True)
-    author = models.ForeignKey('accounts.CustomUser' , on_delete=models.CASCADE)
+    title = models.CharField(max_length=100 , db_collation='utf8_persian_ci' , verbose_name="عنوان")
+    description = models.TextField(blank=True,null=True, verbose_name="مقدمه")
+    img = models.ImageField(upload_to ='uploads/% Y/% m/% d/',null=True , blank=True, verbose_name="تصویر")
+    author = models.ForeignKey('accounts.CustomUser' , on_delete=models.CASCADE, verbose_name="نویسنده")
     body = EditorJsJSONField()
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_last_modified = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=50 ,choices=status_choices)
+    date_created = models.DateTimeField(auto_now_add=True, verbose_name="تاریخ ایجاد")
+    date_last_modified = models.DateTimeField(auto_now=True, verbose_name="تاریخ ویرایش")
+    status = models.CharField(max_length=50 ,choices=status_choices, verbose_name="وضعیت")
     slug = models.SlugField(verbose_name="آدرس"  , allow_unicode=True  , db_collation='utf8_persian_ci')
     views = GenericRelation(HitCount, object_id_field='object_pk',
      related_query_name='hit_count_generic_relation')
-    upvotes = models.ManyToManyField(CustomUser , related_name="upvotes" , blank=True)
+    upvotes = models.ManyToManyField(CustomUser , related_name="upvotes" , blank=True , verbose_name="تعداد پسند ها")
     tags = TaggableManager(_("Tags") , blank=True)
 
+    views.short_description = "بازدیدها"
+    body.short_description = "محتوا"
     def __str__(self):
         return self.title
 
@@ -49,6 +51,10 @@ class Article(models.Model):
     def number_of_upvotes(self):
         return self.upvotes.count()
     
+    class Meta:
+        verbose_name = "نوشته"
+        verbose_name_plural = "مقالات"
+    
     
 
 class Comment(models.Model):
@@ -59,3 +65,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'کامنت ثبت شده از {self.author} در نوشته {self.article}'
+    
+    class Meta:
+        verbose_name = "کامنت"
+        verbose_name_plural = "نظرها"

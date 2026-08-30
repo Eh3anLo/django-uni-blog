@@ -197,8 +197,6 @@ Through this project, I practiced:
 
 ## 📷 Screenshots
 
-More screenshots can be added here to showcase different parts of the application.
-
 ### Dashboard page
 
 ![Home Page](./articles.png)

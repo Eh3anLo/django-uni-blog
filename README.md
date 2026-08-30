@@ -6,7 +6,7 @@ A university-focused blogging platform built with **Django**, designed as a spac
 
 > Add screenshots of the project here.
 
-![Project Screenshot](./docs/images/project-preview.png)
+![Project Screenshot](./home.png)
 
 ---
 
@@ -201,15 +201,11 @@ More screenshots can be added here to showcase different parts of the applicatio
 
 ### Home Page
 
-![Home Page](./docs/images/home.png)
+![Home Page](./articles.png)
 
 ### Article Page
 
-![Article Page](./docs/images/article.png)
-
-### User Profile
-
-![Profile](./docs/images/profile.png)
+![Article Page](./editor.png)
 
 ---
 
